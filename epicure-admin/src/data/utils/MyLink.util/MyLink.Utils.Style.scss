@@ -1,0 +1,9 @@
+@import "../../../App.scss";
+.myLinkStyle {
+  text-decoration: none;
+  color: inherit;
+}
+.myLinkStyle:hover,
+.myLinkStyle:focus {
+  color: $highLightFontColor;
+}

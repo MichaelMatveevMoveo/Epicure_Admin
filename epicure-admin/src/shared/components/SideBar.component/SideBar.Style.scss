@@ -6,9 +6,5 @@
     display: flex;
     flex-direction: column;
     gap: $gapSmall;
-    li:hover,
-    li:focus {
-      color: $highLightFontColor;
-    }
   }
 }
