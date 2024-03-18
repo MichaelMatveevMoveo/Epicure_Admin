@@ -1,0 +1,14 @@
+@import "../../../App.scss";
+
+.SideBarMainDiv {
+  padding: $paddingSmall $paddingBig;
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: $gapSmall;
+    li:hover,
+    li:focus {
+      color: $highLightFontColor;
+    }
+  }
+}

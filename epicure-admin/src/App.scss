@@ -1,3 +1,30 @@
+// colors
+$primaryColor: #443451;
+
+//font
+$fontSize: 1em;
+$fontSmallSize: 0.8em;
+$fontBigSize: 1.3em;
+$fontFamily: Arial, "Helvetica Neue", Helvetica, sans-serif;
+
+$fontLightColor: #f5f5f5;
+$highLightFontColor: #bdbdfb;
+
+//padding
+$paddingSmall: 0.5em;
+$paddingNormal: 1em;
+$paddingBig: 1.5em;
+
+//gap
+$gapSmall: 0.5em;
+$gapNormal: 1.2em;
+$gapBig: 2em;
+
+//border
+$border: 5px double darkgray;
+$border-radius: 25px;
+// remove all the default css
+
 * {
   margin: 0;
   padding: 0;
@@ -6,4 +33,32 @@
 
 img {
   display: block;
+}
+
+.AppMainDiv {
+  background-color: $primaryColor;
+  color: $fontLightColor;
+
+  min-height: 100vh;
+  padding: $paddingNormal;
+
+  font-size: $fontSize;
+  font-family: $fontFamily;
+
+  display: flex;
+  gap: $gapBig;
+
+  .AppSideBarDiv {
+    border: $border;
+    border-radius: $border-radius;
+    padding: $paddingSmall;
+    h1 {
+      font-size: $fontBigSize;
+    }
+  }
+  .AppMaincontantBarDiv {
+    flex-grow: 1;
+    border: $border;
+    border-radius: $border-radius;
+  }
 }
