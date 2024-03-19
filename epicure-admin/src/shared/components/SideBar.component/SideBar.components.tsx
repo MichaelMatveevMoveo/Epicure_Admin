@@ -1,5 +1,5 @@
 import React from "react";
-import "./SideBar.Style.scss";
+import "./SideBar.style.scss";
 import MyLink from "../../../data/utils/MyLink.util/MyLink.utils";
 
 interface SideBarProps {
