@@ -58,6 +58,8 @@ img {
   }
   .AppMaincontantBarDiv {
     flex-grow: 1;
+    padding: $paddingSmall;
+
     border: $border;
     border-radius: $border-radius;
   }
