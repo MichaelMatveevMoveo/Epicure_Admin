@@ -9,9 +9,9 @@ const SideBar: React.FC<SideBarProps> = ({ optionList }) => {
   return (
     <div className="SideBarMainDiv">
       <ul>
-        {optionList.map((value, index) => {
+        {optionList.map((value) => {
           return (
-            <li key={index}>
+            <li key={value}>
               <MyLink to={`/main/${value}`}>{value}</MyLink>
             </li>
           );
