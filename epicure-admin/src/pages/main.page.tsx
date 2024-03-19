@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../shared/hooks/hooks";
 import { getCollectionSizeThunk } from "../redux-toolkit/thunks/general.thanks";
 import { setCollectionName } from "../redux-toolkit/slices/collection.slice";
+import { RootState } from "../redux-toolkit/store/store";
 
-export function MainPage() {
+export const MainPage = () => {
   const { collectionName } = useParams();
   const dispatch = useAppDispatch();
-  const size = useAppSelector((state) => state.collection.size);
+  const size = useAppSelector((state: RootState) => state.collection.size);
 
   useEffect(() => {
     dispatch(setCollectionName(collectionName));
@@ -22,4 +23,4 @@ export function MainPage() {
       {size && <p>{`${size} entries found`}</p>}
     </div>
   );
-}
+};
