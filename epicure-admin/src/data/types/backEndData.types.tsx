@@ -1,4 +1,4 @@
-export type Chef = {
+export type ChefType = {
   _id: string;
   name: string;
   image: string;
@@ -7,7 +7,7 @@ export type Chef = {
   isCeffOfWeek: boolean;
 };
 
-export type Restaurant = {
+export type RestaurantType = {
   _id: string;
   name: string;
   image: string;
@@ -18,7 +18,7 @@ export type Restaurant = {
   signatureDishId: string;
 };
 
-export type Dish = {
+export type DishType = {
   _id: string;
   name: string;
   image: string;
