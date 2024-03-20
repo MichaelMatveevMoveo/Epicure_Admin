@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
+import Box from "@mui/material/Box";
+import { DataGrid, GridColDef, GridRowParams } from "@mui/x-data-grid";
+import Popover from "@mui/material/Popover";
+
+import "./mainPage.style.scss";
+
 import { useAppDispatch, useAppSelector } from "../shared/hooks/hooks";
 import {
   getCollectionItemsThunk,
@@ -8,31 +15,30 @@ import {
   getDishesWithNamesAndNotIdsThunk,
 } from "../redux-toolkit/thunks/general.thanks";
 import { RootState } from "../redux-toolkit/store/store";
-import Box from "@mui/material/Box";
-import { DataGrid, GridColDef, GridRowParams } from "@mui/x-data-grid";
-import Popover from "@mui/material/Popover";
-
-import "./mainPage.style.scss";
 
 import {
   Chefcolumns,
   Restaurantscolumns,
   Dishescolumns,
 } from "../shared/constants/tableShowData.constants";
+import {
+  ChefType,
+  RestaurantType,
+  DishType,
+} from "../data/types/backEndData.types";
+
 import CreateRestaurant from "../shared/components/CreateRestaurant.component/CreateRestaurant.components";
-import { ChefType } from "../data/types/backEndData.types";
 
 export const MainPage = () => {
   const { collectionName } = useParams();
   const dispatch = useAppDispatch();
-
-  const [columns, setColumns] = useState<GridColDef[]>([]);
-
   const size = useAppSelector((state: RootState) => state.collection.size);
-
   const entities = useAppSelector(
     (state: RootState) => state.collection.entities
   );
+
+  //Grid data table
+  const [columns, setColumns] = useState<GridColDef[]>([]);
 
   const fetchDataForTable = useCallback(() => {
     switch (collectionName) {
@@ -53,21 +59,73 @@ export const MainPage = () => {
         break;
     }
   }, [collectionName, dispatch, setColumns]);
-  //row click
 
-  const [selectedRow, setSelectedRow] = useState<any>(null);
+  // click handlers for modal
+  const [isCreate, setIsCreate] = useState<boolean>(false);
+  const [selectedRow, setSelectedRow] = useState<
+    ChefType | RestaurantType | DishType | null
+  >(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleRowClick = (params: GridRowParams) => {
+  const handleRowClick = useCallback((params: GridRowParams<ChefType>) => {
     setSelectedRow(params.row);
     setAnchorEl(document.body);
-  };
+  }, []);
 
-  const handleClosePopover = () => {
+  const handleButtonClick = useCallback(() => {
+    setAnchorEl(document.body);
+    setIsCreate(true);
+  }, []);
+
+  const handleClosePopover = useCallback(() => {
     setSelectedRow(null);
     setAnchorEl(null);
-  };
+    setIsCreate(false);
+  }, []);
 
+  // modal data function creator
+  const updateModalInfoBaseCollection = useCallback(() => {
+    switch (collectionName) {
+      case "chefs":
+        return <p>chefs update</p>;
+        break;
+      case "restaurants":
+        return <p>restaurants update</p>;
+        break;
+      case "dishes":
+        return <p>dishes update</p>;
+        break;
+      default:
+        return <p>default update</p>;
+        break;
+    }
+  }, [collectionName, dispatch]);
+
+  const createModalInfoBaseCollection = useCallback(() => {
+    switch (collectionName) {
+      case "chefs":
+        return <p>chefs create</p>;
+        break;
+      case "restaurants":
+        return <CreateRestaurant />;
+        break;
+      case "dishes":
+        return <p>dishes create</p>;
+        break;
+      default:
+        return <p>default</p>;
+        break;
+    }
+  }, [collectionName, dispatch]);
+
+  const ModalInfoBaseCollection = useCallback(() => {
+    if (isCreate) {
+      return createModalInfoBaseCollection();
+    }
+    return updateModalInfoBaseCollection();
+  }, [updateModalInfoBaseCollection, createModalInfoBaseCollection, isCreate]);
+
+  // use Effects
   useEffect(() => {
     fetchDataForTable();
   }, [fetchDataForTable]);
@@ -82,6 +140,10 @@ export const MainPage = () => {
     <div className="MainPageDiv">
       <h1>{collectionName}</h1>
       {size && <p>{`${size} entries found`}</p>}
+      <button
+        onClick={handleButtonClick}
+        className="MainPageCreateButton"
+      >{`add ${collectionName}`}</button>
       {entities.length > 0 && (
         <div className="MainPageTableDiv">
           <Box className="box-root">
@@ -105,8 +167,9 @@ export const MainPage = () => {
           </Box>
         </div>
       )}
+
       <Popover
-        open={Boolean(selectedRow)}
+        open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         onClose={handleClosePopover}
         anchorOrigin={{
@@ -118,16 +181,11 @@ export const MainPage = () => {
           horizontal: "center",
         }}
         PaperProps={{
-          style: {
-            width: "50%", // Specify the width
-            height: "50%", // Specify the height
-            overflow: "auto", // Enable overflow if needed
-          },
+          className: "popoverPaper", // Add the class name
         }}
       >
-        <p>stam</p>
+        {ModalInfoBaseCollection()}
       </Popover>
-      {/* {entities.length > 0 && <CreateRestaurant />} */}
     </div>
   );
 };
