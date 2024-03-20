@@ -1,4 +1,6 @@
 import { GridColDef } from "@mui/x-data-grid";
+import { CLOUD_NAME } from "./backEnd.constants";
+import MyRoundImage from "../components/MyRoundImage.component/MyRoundImage.components";
 export const Chefcolumns: GridColDef[] = [
   { field: "_id", headerName: "ID", width: 90 },
   {
@@ -16,8 +18,13 @@ export const Chefcolumns: GridColDef[] = [
   {
     field: "image",
     headerName: "Image",
-    width: 110,
-    editable: true,
+    width: 70,
+    renderCell: (params) => (
+      <MyRoundImage
+        url={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${params.value}.jpg`}
+        alt={"chef"}
+      />
+    ),
   },
   {
     field: "isActive",

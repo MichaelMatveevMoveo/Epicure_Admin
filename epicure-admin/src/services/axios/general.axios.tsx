@@ -4,6 +4,7 @@ import {
   BACKEND_URL,
   BACKEND_V,
 } from "../../shared/constants/backEnd.constants";
+import { cloudinaryImageCheckType } from "../../data/types/cloudinary.types";
 
 export const getCollectionSize = async (CollectionName: string) => {
   return await axios.get(
@@ -27,4 +28,43 @@ export const getDishesWithNamesAndNotIds = async () => {
   return await axios.get(
     `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/dishes/dishesWithRestaurantName`
   );
+};
+
+export const getSignatureForCloud = async () => {
+  return await axios.get(
+    `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/cloud/get-signature`
+  );
+};
+
+export const addChef = async (
+  name: string,
+  description: string,
+  imageprops?: cloudinaryImageCheckType
+) => {
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("description", description);
+  if (imageprops) {
+    formData.append("image", imageprops.public_id);
+    formData.append("version", imageprops.version);
+    formData.append("signature", imageprops.signature);
+  }
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/chefs`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response.status != 200) {
+      return "you fail to create the chef";
+    }
+    return "the chef was created";
+  } catch (error) {
+    return "you fail to create the chef";
+  }
 };

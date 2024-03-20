@@ -28,6 +28,7 @@ import {
 } from "../data/types/backEndData.types";
 
 import CreateRestaurant from "../shared/components/CreateRestaurant.component/CreateRestaurant.components";
+import CreateChef from "../shared/components/CreateChef.component/CreateChef.components";
 
 export const MainPage = () => {
   const { collectionName } = useParams();
@@ -104,7 +105,7 @@ export const MainPage = () => {
   const createModalInfoBaseCollection = useCallback(() => {
     switch (collectionName) {
       case "chefs":
-        return <p>chefs create</p>;
+        return <CreateChef />;
         break;
       case "restaurants":
         return <CreateRestaurant />;
