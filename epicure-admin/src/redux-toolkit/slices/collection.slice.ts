@@ -5,14 +5,18 @@ import {
   getRestaurantsWithNameAndNotIdThunk,
   getDishesWithNamesAndNotIdsThunk,
 } from "../thunks/general.thanks";
-import { Chef, Restaurant, Dish } from "../../data/types/backEndData.types";
+import {
+  ChefType,
+  RestaurantType,
+  DishType,
+} from "../../data/types/backEndData.types";
 
 interface collectionState {
   isLoading: boolean;
   isError: boolean;
   collectionName: string | null;
   size: number | null;
-  entities: Chef[] | Restaurant[] | Dish[];
+  entities: ChefType[] | RestaurantType[] | DishType[];
 }
 
 const initialState: collectionState = {

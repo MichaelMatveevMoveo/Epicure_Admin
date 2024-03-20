@@ -5,7 +5,11 @@ import {
   getRestaurantsWithNameAndNotId,
   getDishesWithNamesAndNotIds,
 } from "../../services/axios/general.axios";
-import { Chef, Restaurant, Dish } from "../../data/types/backEndData.types";
+import {
+  ChefType,
+  RestaurantType,
+  DishType,
+} from "../../data/types/backEndData.types";
 
 export const getCollectionSizeThunk = createAsyncThunk(
   "{CollectionName}/collection/size",
@@ -17,21 +21,21 @@ export const getCollectionSizeThunk = createAsyncThunk(
 
 export const getCollectionItemsThunk = createAsyncThunk(
   "allChefs",
-  async (collectionName: string): Promise<Chef[]> => {
+  async (collectionName: string): Promise<ChefType[]> => {
     const response = await getAllSize(collectionName);
     return response.data;
   }
 );
 export const getRestaurantsWithNameAndNotIdThunk = createAsyncThunk(
   "getRestaurantsWithNameAndNotId",
-  async (): Promise<Restaurant[]> => {
+  async (): Promise<RestaurantType[]> => {
     const response = await getRestaurantsWithNameAndNotId();
     return response.data;
   }
 );
 export const getDishesWithNamesAndNotIdsThunk = createAsyncThunk(
   "getDishesWithNamesAndNotIds",
-  async (): Promise<Dish[]> => {
+  async (): Promise<DishType[]> => {
     const response = await getDishesWithNamesAndNotIds();
     return response.data;
   }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../shared/hooks/hooks";
 import {
@@ -7,7 +7,6 @@ import {
   getRestaurantsWithNameAndNotIdThunk,
   getDishesWithNamesAndNotIdsThunk,
 } from "../redux-toolkit/thunks/general.thanks";
-import { setCollectionName } from "../redux-toolkit/slices/collection.slice";
 import { RootState } from "../redux-toolkit/store/store";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -19,6 +18,7 @@ import {
   Restaurantscolumns,
   Dishescolumns,
 } from "../shared/constants/tableShowData.constants";
+import CreateRestaurant from "../shared/components/CreateRestaurant.component/CreateRestaurant.components";
 
 export const MainPage = () => {
   const { collectionName } = useParams();
@@ -27,28 +27,40 @@ export const MainPage = () => {
   const [columns, setColumns] = useState<GridColDef[]>([]);
 
   const size = useAppSelector((state: RootState) => state.collection.size);
+
   const entities = useAppSelector(
     (state: RootState) => state.collection.entities
   );
 
-  useEffect(() => {
-    dispatch(setCollectionName(collectionName));
-    if (collectionName) {
-      dispatch(getCollectionSizeThunk(collectionName));
-      if (collectionName == "chefs") {
+  const fetchDataForTable = useCallback(() => {
+    switch (collectionName) {
+      case "chefs":
         dispatch(getCollectionItemsThunk(collectionName));
         setColumns(Chefcolumns);
-      }
-      if (collectionName == "restaurants") {
+        break;
+      case "restaurants":
         dispatch(getRestaurantsWithNameAndNotIdThunk());
         setColumns(Restaurantscolumns);
-      }
-      if (collectionName == "dishes") {
+        break;
+      case "dishes":
         dispatch(getDishesWithNamesAndNotIdsThunk());
         setColumns(Dishescolumns);
-      }
+        break;
+      default:
+        // Handle default case if needed
+        break;
     }
-  }, [dispatch, collectionName]);
+  }, [collectionName, dispatch, setColumns]);
+
+  useEffect(() => {
+    fetchDataForTable();
+  }, [fetchDataForTable]);
+
+  useEffect(() => {
+    if (collectionName) {
+      dispatch(getCollectionSizeThunk(collectionName));
+    }
+  }, [collectionName, dispatch]);
 
   return (
     <div className="MainPageDiv">
@@ -56,7 +68,7 @@ export const MainPage = () => {
       {size && <p>{`${size} entries found`}</p>}
       {entities.length > 0 && (
         <div className="MainPageTableDiv">
-          <Box sx={{ height: "500px", width: "100%" }}>
+          <Box className="box-root">
             <DataGrid
               getRowId={(row) => row._id}
               rows={entities}
@@ -71,23 +83,12 @@ export const MainPage = () => {
               pageSizeOptions={[1, 5, 10, 20, 50]}
               checkboxSelection
               disableRowSelectionOnClick
-              sx={{
-                boxShadow: 2,
-                border: 2,
-                backgroundColor: "#3e2f4e",
-                color: "#f5f5f5",
-                borderColor: "primary.light",
-                "& .MuiDataGrid-cell:hover": {
-                  color: "primary.main",
-                },
-              }}
+              className="dataGrid-root"
             />
           </Box>
         </div>
       )}
-      {entities.length > 0 && (
-        <div className="MainPageTableDiv">{entities[0]._id}</div>
-      )}
+      {/* {entities.length > 0 && <CreateRestaurant />} */}
     </div>
   );
 };
