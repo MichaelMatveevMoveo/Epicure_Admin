@@ -31,6 +31,7 @@ import CreateRestaurant from "../shared/components/CreateRestaurant.component/Cr
 import CreateChef from "../shared/components/CreateChef.component/CreateChef.components";
 import { options } from "../shared/constants/backEnd.constants";
 import { mainPageText } from "../resources/mainPage.resources";
+import CreateDish from "../shared/components/CreateDish.component/CreateDish.components";
 
 export const MainPage = () => {
   const { collectionName } = useParams();
@@ -113,7 +114,7 @@ export const MainPage = () => {
         return <CreateRestaurant />;
         break;
       case options.dishes.key:
-        return <p>dishes create</p>;
+        return <CreateDish />;
         break;
       default:
         return <p>default</p>;
