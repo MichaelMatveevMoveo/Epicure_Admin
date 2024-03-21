@@ -1,12 +1,24 @@
+import { ChefType } from "../../../data/types/backEndData.types";
 import { createChefText } from "../../../resources/createChef.resources";
-import { addChef } from "../../../services/axios/general.axios";
+import {
+  addChef,
+  changeChef,
+  deleteItemFromCollection,
+} from "../../../services/axios/general.axios";
 import { uploadImage } from "../../../services/cloudinary.services";
+import { CLOUD_NAME, options } from "../../constants/backEnd.constants";
+import MyRoundImage from "../MyRoundImage.component/MyRoundImage.components";
 import "./CreateChef.style.scss";
 import { useCallback, useState } from "react";
 
-const CreateChef = () => {
-  const [chefName, setChefName] = useState<string>("");
-  const [chefDescription, setChefDescription] = useState<string>("");
+interface CreateChefProps {
+  chef?: ChefType | null;
+}
+const CreateChef: React.FC<CreateChefProps> = ({ chef = null }) => {
+  const [chefName, setChefName] = useState<string>(chef ? chef.name : "");
+  const [chefDescription, setChefDescription] = useState<string>(
+    chef ? chef.description : ""
+  );
   const [sendresponse, setSendresponse] = useState<string | null>(null);
   const [fileUpload, setFileUpload] = useState<File | null>(null);
 
@@ -29,7 +41,39 @@ const CreateChef = () => {
     if (newImageData) {
       setSendresponse(await addChef(chefName, chefDescription, newImageData));
     }
+  }, [fileUpload, chefName, chefDescription]);
+
+  const updateChefHandler = useCallback(async () => {
+    let newImageData = null;
+    if (fileUpload) {
+      newImageData = await uploadImage(fileUpload);
+    }
+    if (chef) {
+      if (newImageData) {
+        setSendresponse(
+          await changeChef(
+            chef?._id,
+            chefName,
+            chefDescription,
+            undefined,
+            newImageData
+          )
+        );
+      } else {
+        setSendresponse(
+          await changeChef(chef?._id, chefName, chefDescription, chef?.image)
+        );
+      }
+    }
   }, [fileUpload, uploadImage, addChef, chefName, chefDescription]);
+
+  const deleteChefHandler = useCallback(async () => {
+    if (chef) {
+      setSendresponse(
+        await deleteItemFromCollection(options.chefs.key, chef._id)
+      );
+    }
+  }, [chef]);
 
   return (
     <div className="CreateChefMainDiv">
@@ -55,10 +99,24 @@ const CreateChef = () => {
           setChefDescription(event.currentTarget.value);
         }}
       ></textarea>
+      {chef?.image && (
+        <div>
+          <p>{createChefText.inputs.oldImage_Image}</p>
+          <div className="CreateUserOldImage">
+            <MyRoundImage
+              url={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${chef.image}.jpg`}
+              alt={"dish"}
+            />
+          </div>
+        </div>
+      )}
       <label htmlFor="file-field">{createChefText.inputs.choose_Image}</label>
       <input id="file-field" type="file" onChange={handleFileChange} />
       {sendresponse && <p>{sendresponse}</p>}
-      <button onClick={createChefHandler}>create</button>
+      <button onClick={chef ? updateChefHandler : createChefHandler}>
+        {chef ? "update" : "create"}
+      </button>
+      {chef && <button onClick={deleteChefHandler}>delete</button>}
     </div>
   );
 };

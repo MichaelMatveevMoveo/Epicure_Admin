@@ -9,6 +9,8 @@ import {
   CreateChefResource,
   CreateDishResource,
   CreateRestaurantResource,
+  deleteChefResource,
+  updateChefResource,
 } from "../../resources/general.axios.resources";
 
 export const getCollectionSize = async (CollectionName: string) => {
@@ -145,5 +147,57 @@ export const addDish = async (
     return CreateDishResource.onSuccuss;
   } catch (error) {
     return CreateDishResource.onFail;
+  }
+};
+
+export const changeChef = async (
+  chef_id: string,
+  name: string,
+  description: string,
+  image?: string,
+  imageprops?: cloudinaryImageCheckType
+) => {
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("description", description);
+  if (image) {
+    formData.append("image", image);
+  }
+  if (imageprops) {
+    formData.append("image", imageprops.public_id);
+    formData.append("version", imageprops.version);
+    formData.append("signature", imageprops.signature);
+  }
+  try {
+    const response = await axios.patch(
+      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/chefs/${chef_id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response.status != 200) {
+      return updateChefResource.onFail;
+    }
+    return updateChefResource.onSuccuss;
+  } catch (error) {
+    return updateChefResource.onFail;
+  }
+};
+
+export const deleteItemFromCollection = async (
+  CollectionName: string,
+  item_id: string
+) => {
+  try {
+    axios.delete(
+      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/${CollectionName}/${item_id}`
+    );
+    return deleteChefResource.onSuccuss;
+  } catch (error) {
+    return deleteChefResource.onFail;
   }
 };
