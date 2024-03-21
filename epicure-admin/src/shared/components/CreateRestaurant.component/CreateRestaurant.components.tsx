@@ -5,7 +5,7 @@ import {
   addRestaurant,
   getAllSize,
 } from "../../../services/axios/general.axios";
-import { createRestaurantText } from "../../../resources/CreateRestaurant.resources";
+import { createRestaurantText } from "../../../resources/createRestaurant.resources";
 import { uploadImage } from "../../../services/cloudinary.services";
 
 const CreateRestaurant = () => {
