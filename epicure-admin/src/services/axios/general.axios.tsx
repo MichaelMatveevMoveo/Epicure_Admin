@@ -5,6 +5,7 @@ import {
   BACKEND_V,
 } from "../../shared/constants/backEnd.constants";
 import { cloudinaryImageCheckType } from "../../data/types/cloudinary.types";
+import { CreateChefResource } from "../../resources/general.axios.resources";
 
 export const getCollectionSize = async (CollectionName: string) => {
   return await axios.get(
@@ -61,10 +62,10 @@ export const addChef = async (
     );
 
     if (response.status != 200) {
-      return "you fail to create the chef";
+      return CreateChefResource.onFail;
     }
-    return "the chef was created";
+    return CreateChefResource.onSuccuss;
   } catch (error) {
-    return "you fail to create the chef";
+    return CreateChefResource.onFail;
   }
 };

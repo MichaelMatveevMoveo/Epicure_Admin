@@ -29,6 +29,8 @@ import {
 
 import CreateRestaurant from "../shared/components/CreateRestaurant.component/CreateRestaurant.components";
 import CreateChef from "../shared/components/CreateChef.component/CreateChef.components";
+import { options } from "../shared/constants/backEnd.constants";
+import { mainPageText } from "../resources/mainPage.resources";
 
 export const MainPage = () => {
   const { collectionName } = useParams();
@@ -87,13 +89,13 @@ export const MainPage = () => {
   // modal data function creator
   const updateModalInfoBaseCollection = useCallback(() => {
     switch (collectionName) {
-      case "chefs":
+      case options.chefs.key:
         return <p>chefs update</p>;
         break;
-      case "restaurants":
+      case options.restaurants.key:
         return <p>restaurants update</p>;
         break;
-      case "dishes":
+      case options.dishes.key:
         return <p>dishes update</p>;
         break;
       default:
@@ -104,13 +106,13 @@ export const MainPage = () => {
 
   const createModalInfoBaseCollection = useCallback(() => {
     switch (collectionName) {
-      case "chefs":
+      case options.chefs.key:
         return <CreateChef />;
         break;
-      case "restaurants":
+      case options.restaurants.key:
         return <CreateRestaurant />;
         break;
-      case "dishes":
+      case options.dishes.key:
         return <p>dishes create</p>;
         break;
       default:
@@ -140,11 +142,10 @@ export const MainPage = () => {
   return (
     <div className="MainPageDiv">
       <h1>{collectionName}</h1>
-      {size && <p>{`${size} entries found`}</p>}
-      <button
-        onClick={handleButtonClick}
-        className="MainPageCreateButton"
-      >{`add ${collectionName}`}</button>
+      {size && <p>{mainPageText.numberOfEntries(size)}</p>}
+      <button onClick={handleButtonClick} className="MainPageCreateButton">
+        {mainPageText.createButton(collectionName || "")}
+      </button>
       {entities.length > 0 && (
         <div className="MainPageTableDiv">
           <Box className="box-root">

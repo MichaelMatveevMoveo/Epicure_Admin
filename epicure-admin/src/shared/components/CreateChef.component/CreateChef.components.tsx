@@ -1,3 +1,4 @@
+import { createChefText } from "../../../resources/createChef.resources";
 import { addChef } from "../../../services/axios/general.axios";
 import { uploadImage } from "../../../services/cloudinary.services";
 import "./CreateChef.style.scss";
@@ -32,8 +33,8 @@ const CreateChef = () => {
 
   return (
     <div className="CreateChefMainDiv">
-      <h2>Create New Chef:</h2>
-      <label htmlFor="name">name:</label>
+      <h2>{createChefText.title}</h2>
+      <label htmlFor="name">{createChefText.inputs.name}</label>
       <input
         type="text"
         name="name"
@@ -43,7 +44,7 @@ const CreateChef = () => {
           setChefName(event.currentTarget.value);
         }}
       ></input>
-      <label htmlFor="description">description:</label>
+      <label htmlFor="description">{createChefText.inputs.description}</label>
       <textarea
         id="description"
         name="description"
@@ -54,7 +55,7 @@ const CreateChef = () => {
           setChefDescription(event.currentTarget.value);
         }}
       ></textarea>
-      <label htmlFor="file-field">choose Image:</label>
+      <label htmlFor="file-field">{createChefText.inputs.choose_Image}</label>
       <input id="file-field" type="file" onChange={handleFileChange} />
       {sendresponse && <p>{sendresponse}</p>}
       <button onClick={createChefHandler}>create</button>

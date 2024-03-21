@@ -10,7 +10,7 @@ function App() {
     <div className="AppMainDiv">
       <div className="AppSideBarDiv">
         <h1>{sideBar.title}</h1>
-        <SideBar optionList={sideBar.options} />
+        <SideBar />
       </div>
       <div className="AppMaincontantBarDiv">
         <Routes>
