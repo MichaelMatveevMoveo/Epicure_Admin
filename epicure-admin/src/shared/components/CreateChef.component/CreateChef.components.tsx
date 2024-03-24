@@ -1,10 +1,7 @@
 import { ChefType } from "../../../data/types/backEndData.types";
 import { createChefText } from "../../../resources/createChef.resources";
-import {
-  addChef,
-  changeChef,
-  deleteItemFromCollection,
-} from "../../../services/axios/general.axios";
+import { addChef, changeChef } from "../../../services/axios/chef.axios";
+import { deleteItemFromCollection } from "../../../services/axios/general.axios";
 import { uploadImage } from "../../../services/cloudinary.services";
 import { CLOUD_NAME, options } from "../../constants/backEnd.constants";
 import MyRoundImage from "../MyRoundImage.component/MyRoundImage.components";

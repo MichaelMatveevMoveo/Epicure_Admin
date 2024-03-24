@@ -4,6 +4,7 @@ import {
   getCollectionItemsThunk,
   getRestaurantsWithNameAndNotIdThunk,
   getDishesWithNamesAndNotIdsThunk,
+  getCollectionItemsPageThunk,
 } from "../thunks/general.thanks";
 import {
   ChefType,
@@ -64,6 +65,21 @@ const collectionSlice = createSlice({
       state.isError = false;
       state.entities = action.payload;
     });
+
+    builder.addCase(getCollectionItemsPageThunk.pending, (state) => {
+      state.isLoading = true;
+      state.entities = [];
+    });
+    builder.addCase(getCollectionItemsPageThunk.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+    });
+    builder.addCase(getCollectionItemsPageThunk.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.entities = action.payload;
+    });
+
     builder.addCase(getRestaurantsWithNameAndNotIdThunk.pending, (state) => {
       state.isLoading = true;
       state.entities = [];

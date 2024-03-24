@@ -1,8 +1,10 @@
 import { GridColDef } from "@mui/x-data-grid";
-import { CLOUD_NAME } from "./backEnd.constants";
+import { CLOUD_NAME, options } from "./backEnd.constants";
 import MyRoundImage from "../components/MyRoundImage.component/MyRoundImage.components";
+import DeleteButton from "../components/DeleteButton.component/DeleteButton.components";
 export const Chefcolumns: GridColDef[] = [
   { field: "_id", headerName: "ID", width: 90 },
+
   {
     field: "name",
     headerName: "Name",
@@ -39,6 +41,14 @@ export const Chefcolumns: GridColDef[] = [
     type: "boolean",
     width: 100,
     editable: true,
+  },
+  {
+    field: "delete",
+    headerName: "delete",
+    width: 70,
+    renderCell: (params) => (
+      <DeleteButton collectionName={options.chefs.key} itemId={params.row.id} />
+    ),
   },
 ];
 

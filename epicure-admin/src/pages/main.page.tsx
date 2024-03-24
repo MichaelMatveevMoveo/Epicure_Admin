@@ -9,10 +9,10 @@ import "./mainPage.style.scss";
 
 import { useAppDispatch, useAppSelector } from "../shared/hooks/hooks";
 import {
-  getCollectionItemsThunk,
   getCollectionSizeThunk,
   getRestaurantsWithNameAndNotIdThunk,
   getDishesWithNamesAndNotIdsThunk,
+  getCollectionItemsPageThunk,
 } from "../redux-toolkit/thunks/general.thanks";
 import { RootState } from "../redux-toolkit/store/store";
 
@@ -36,6 +36,7 @@ import CreateDish from "../shared/components/CreateDish.component/CreateDish.com
 export const MainPage = () => {
   const { collectionName } = useParams();
   const dispatch = useAppDispatch();
+
   const size = useAppSelector((state: RootState) => state.collection.size);
   const entities = useAppSelector(
     (state: RootState) => state.collection.entities
@@ -43,26 +44,51 @@ export const MainPage = () => {
 
   //Grid data table
   const [columns, setColumns] = useState<GridColDef[]>([]);
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 1,
+  });
 
   const fetchDataForTable = useCallback(() => {
     switch (collectionName) {
       case "chefs":
-        dispatch(getCollectionItemsThunk(collectionName));
+        dispatch(
+          getCollectionItemsPageThunk({
+            collectionName,
+            offset: paginationModel.page,
+            limit: paginationModel.pageSize,
+          })
+        );
         setColumns(Chefcolumns);
         break;
       case "restaurants":
-        dispatch(getRestaurantsWithNameAndNotIdThunk());
+        dispatch(
+          getRestaurantsWithNameAndNotIdThunk({
+            offset: paginationModel.page,
+            limit: paginationModel.pageSize,
+          })
+        );
         setColumns(Restaurantscolumns);
         break;
       case "dishes":
-        dispatch(getDishesWithNamesAndNotIdsThunk());
+        dispatch(
+          getDishesWithNamesAndNotIdsThunk({
+            offset: paginationModel.page,
+            limit: paginationModel.pageSize,
+          })
+        );
         setColumns(Dishescolumns);
         break;
       default:
         // Handle default case if needed
         break;
     }
-  }, [collectionName, dispatch, setColumns]);
+  }, [
+    collectionName,
+    dispatch,
+    paginationModel.page,
+    paginationModel.pageSize,
+  ]);
 
   // click handlers for modal
   const [isCreate, setIsCreate] = useState<boolean>(false);
@@ -94,16 +120,12 @@ export const MainPage = () => {
     switch (collectionName) {
       case options.chefs.key:
         return <CreateChef chef={selectedRow as ChefType} />;
-        break;
       case options.restaurants.key:
-        return <p>restaurants update</p>;
-        break;
+        return <CreateRestaurant restaurant={selectedRow as RestaurantType} />;
       case options.dishes.key:
-        return <p>dishes update</p>;
-        break;
+        return <CreateDish dish={selectedRow as DishType} />;
       default:
         return <p>default update</p>;
-        break;
     }
   }, [collectionName, selectedRow]);
 
@@ -155,17 +177,13 @@ export const MainPage = () => {
             <DataGrid
               getRowId={(row) => row._id}
               rows={entities}
+              rowCount={size ? size : 0}
               columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: {
-                    pageSize: 20,
-                  },
-                },
-              }}
+              paginationModel={paginationModel}
+              onPaginationModelChange={setPaginationModel}
               pageSizeOptions={[1, 5, 10, 20, 50]}
               checkboxSelection
-              onRowClick={handleRowClick}
+              onRowDoubleClick={handleRowClick}
               disableRowSelectionOnClick
               className="dataGrid-root"
             />

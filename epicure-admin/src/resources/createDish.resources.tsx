@@ -7,5 +7,6 @@ export const createDishText = {
     choose_Image: "choose Image:",
     ingredient: "add Ingredient:",
     tag: "add tag:",
+    oldImage_Image: "old image:",
   },
 };

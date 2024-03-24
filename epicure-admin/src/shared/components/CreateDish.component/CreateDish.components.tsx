@@ -1,20 +1,39 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { RestaurantType } from "../../../data/types/backEndData.types";
+import {
+  DishType,
+  RestaurantType,
+} from "../../../data/types/backEndData.types";
 import { uploadImage } from "../../../services/cloudinary.services";
-import { addDish, getAllSize } from "../../../services/axios/general.axios";
+import {
+  deleteItemFromCollection,
+  getAllSize,
+} from "../../../services/axios/general.axios";
 import { createDishText } from "../../../resources/createDish.resources";
+import { addDish, changeDish } from "../../../services/axios/dishes.axios";
+import { CLOUD_NAME, options } from "../../constants/backEnd.constants";
+import MyRoundImage from "../MyRoundImage.component/MyRoundImage.components";
 
-const CreateDish = () => {
+interface CreateDishProps {
+  dish?: DishType | null;
+}
+
+const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
   const [restaurants, setRestaurants] = useState<RestaurantType[]>([]);
-  const [dishName, setDishName] = useState<string>("");
-  const [selectedRestaurantId, setSelectedRestaurantId] = useState<string>("");
-  const [price, setPrice] = useState<string>("0");
+  const [dishName, setDishName] = useState<string>(dish ? dish.name : "");
+  const [selectedRestaurantId, setSelectedRestaurantId] = useState<string>(
+    dish ? dish.restaurant : ""
+  );
+  const [price, setPrice] = useState<string>(
+    dish ? dish.price.toString() : "0"
+  );
 
   const [currentIngredient, setCurrentIngredient] = useState<string>("");
-  const [ingredients, setIngredients] = useState<string[]>([]);
+  const [ingredients, setIngredients] = useState<string[]>(
+    dish ? dish.Ingredients : []
+  );
 
   const [currentTag, setCurrentTag] = useState<string>("");
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>(dish ? dish.tags : []);
 
   const [sendresponse, setSendresponse] = useState<string | null>(null);
   const [fileUpload, setFileUpload] = useState<File | null>(null);
@@ -74,6 +93,57 @@ const CreateDish = () => {
     }
   }, [fileUpload, dishName, selectedRestaurantId, price, ingredients, tags]);
 
+  const updateDishHandler = useCallback(async () => {
+    let newImageData = null;
+    if (fileUpload) {
+      newImageData = await uploadImage(fileUpload);
+    }
+    if (dish) {
+      if (newImageData) {
+        setSendresponse(
+          await changeDish(
+            dish?._id,
+            dishName,
+            selectedRestaurantId,
+            price,
+            ingredients,
+            tags,
+            undefined,
+            newImageData
+          )
+        );
+      } else {
+        setSendresponse(
+          await changeDish(
+            dish?._id,
+            dishName,
+            selectedRestaurantId,
+            price,
+            ingredients,
+            tags,
+            dish?.image
+          )
+        );
+      }
+    }
+  }, [
+    fileUpload,
+    dish,
+    dishName,
+    selectedRestaurantId,
+    price,
+    ingredients,
+    tags,
+  ]);
+
+  const deleteDishHandler = useCallback(async () => {
+    if (dish) {
+      setSendresponse(
+        await deleteItemFromCollection(options.dishes.key, dish._id)
+      );
+    }
+  }, [restaurants]);
+
   const fetchRestaurants = useCallback(async (collectionName: string) => {
     const response = await getAllSize(collectionName);
     setRestaurants(response.data);
@@ -96,7 +166,6 @@ const CreateDish = () => {
           setDishName(event.currentTarget.value);
         }}
       ></input>
-
       <label htmlFor="restaurants">{createDishText.inputs.restaurant}</label>
       {restaurants.length > 0 && (
         <select
@@ -118,7 +187,6 @@ const CreateDish = () => {
           })}
         </select>
       )}
-
       <label htmlFor="price">{createDishText.inputs.price}</label>
       <input
         type="text"
@@ -129,7 +197,6 @@ const CreateDish = () => {
           setPrice(event.currentTarget.value);
         }}
       />
-
       <label htmlFor="ingredient">{createDishText.inputs.ingredient}</label>
       <input
         type="text"
@@ -148,7 +215,6 @@ const CreateDish = () => {
         ))}
       </ul>
       <button onClick={addIngredient}>Add</button>
-
       <label htmlFor="tag">{createDishText.inputs.tag}</label>
       <input
         type="text"
@@ -168,10 +234,25 @@ const CreateDish = () => {
       </ul>
       <button onClick={addTag}>Add</button>
 
+      {dish?.image && (
+        <div>
+          <p>{createDishText.inputs.oldImage_Image}</p>
+          <div className="CreateUserOldImage">
+            <MyRoundImage
+              url={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${dish.image}.jpg`}
+              alt={"restaurant"}
+            />
+          </div>
+        </div>
+      )}
+
       <label htmlFor="file-field">{createDishText.inputs.choose_Image}</label>
       <input id="file-field" type="file" onChange={handleFileChange} />
       {sendresponse && <p>{sendresponse}</p>}
-      <button onClick={createDishHandler}>create</button>
+      <button onClick={dish ? updateDishHandler : createDishHandler}>
+        {dish ? "update" : "create"}
+      </button>
+      {dish && <button onClick={deleteDishHandler}>delete</button>}
     </div>
   );
 };

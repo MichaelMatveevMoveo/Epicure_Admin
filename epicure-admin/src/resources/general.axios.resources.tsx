@@ -18,7 +18,17 @@ export const updateChefResource = {
   onFail: "you fail to update the Chef",
 };
 
+export const updateRestaurantResource = {
+  onSuccuss: "the Restaurant was updated",
+  onFail: "you fail to update the Restaurant",
+};
+
+export const updateDishResource = {
+  onSuccuss: "the dish was updated",
+  onFail: "you fail to update the dish",
+};
+
 export const deleteChefResource = {
-  onSuccuss: "the Chef was deleted",
-  onFail: "you fail to delete the Chef",
+  onSuccuss: "the item was deleted",
+  onFail: "you fail to delete the item",
 };
