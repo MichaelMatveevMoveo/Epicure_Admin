@@ -61,7 +61,7 @@ const CreateChef: React.FC<CreateChefProps> = ({ chef = null }) => {
         );
       }
     }
-  }, [fileUpload, uploadImage, addChef, chefName, chefDescription]);
+  }, [fileUpload, chef, chefName, chefDescription]);
 
   const deleteChefHandler = useCallback(async () => {
     if (chef) {

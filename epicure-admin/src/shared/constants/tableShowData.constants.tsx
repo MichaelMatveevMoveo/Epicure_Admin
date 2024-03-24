@@ -104,6 +104,17 @@ export const Restaurantscolumns: GridColDef[] = [
     width: 100,
     editable: true,
   },
+  {
+    field: "delete",
+    headerName: "delete",
+    width: 70,
+    renderCell: (params) => (
+      <DeleteButton
+        collectionName={options.restaurants.key}
+        itemId={params.row.id}
+      />
+    ),
+  },
 ];
 
 export const Dishescolumns: GridColDef[] = [
@@ -170,5 +181,16 @@ export const Dishescolumns: GridColDef[] = [
     type: "number",
     width: 100,
     editable: true,
+  },
+  {
+    field: "delete",
+    headerName: "delete",
+    width: 70,
+    renderCell: (params) => (
+      <DeleteButton
+        collectionName={options.restaurants.key}
+        itemId={params.row.id}
+      />
+    ),
   },
 ];

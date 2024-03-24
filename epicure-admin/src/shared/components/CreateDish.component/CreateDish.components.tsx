@@ -142,7 +142,7 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
         await deleteItemFromCollection(options.dishes.key, dish._id)
       );
     }
-  }, [restaurants]);
+  }, [dish]);
 
   const fetchRestaurants = useCallback(async (collectionName: string) => {
     const response = await getAllSize(collectionName);
