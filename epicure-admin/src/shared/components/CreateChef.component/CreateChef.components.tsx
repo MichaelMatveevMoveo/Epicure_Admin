@@ -26,7 +26,6 @@ const CreateChef: React.FC<CreateChefProps> = ({ chef = null }) => {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
       if (file) {
-        console.log("Selected file:", file);
         setFileUpload(file);
       }
     },

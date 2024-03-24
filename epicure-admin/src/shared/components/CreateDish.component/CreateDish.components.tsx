@@ -23,7 +23,6 @@ const CreateDish = () => {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
       if (file) {
-        console.log("Selected file:", file);
         setFileUpload(file);
       }
     },
@@ -104,7 +103,6 @@ const CreateDish = () => {
           name="restaurants"
           id="restaurants"
           onChange={(event) => {
-            console.log(event.currentTarget.value);
             setSelectedRestaurantId(event.currentTarget.value);
           }}
         >
@@ -112,7 +110,6 @@ const CreateDish = () => {
             ----
           </option>
           {restaurants.map((value) => {
-            console.log(restaurants);
             return (
               <option key={value._id} value={value._id}>
                 {value.name}
@@ -131,7 +128,7 @@ const CreateDish = () => {
         onChange={(event) => {
           setPrice(event.currentTarget.value);
         }}
-      ></input>
+      />
 
       <label htmlFor="ingredient">{createDishText.inputs.ingredient}</label>
       <input
