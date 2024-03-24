@@ -6,6 +6,12 @@
   flex-direction: column;
   gap: $gapNormal;
 
+  .MainPageCreateButton {
+    width: 15%;
+    height: 10%;
+    font-size: $fontSize;
+  }
+
   .MainPageTableDiv {
     width: 100%;
     max-height: 80%;
@@ -25,4 +31,9 @@
       }
     }
   }
+}
+.popoverPaper {
+  width: 50%;
+  height: 50%;
+  overflow: auto;
 }

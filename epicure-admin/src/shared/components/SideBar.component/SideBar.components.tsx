@@ -1,18 +1,16 @@
 import React from "react";
 import "./SideBar.style.scss";
 import MyLink from "../../../data/utils/MyLink.util/MyLink.utils";
+import { options } from "../../constants/backEnd.constants";
 
-interface SideBarProps {
-  optionList: string[];
-}
-const SideBar: React.FC<SideBarProps> = ({ optionList }) => {
+const SideBar = () => {
   return (
     <div className="SideBarMainDiv">
       <ul>
-        {optionList.map((value) => {
+        {Object.values(options).map((value) => {
           return (
-            <li key={value}>
-              <MyLink to={`/main/${value}`}>{value}</MyLink>
+            <li key={value.key}>
+              <MyLink to={`/main/${value.key}`}>{value.value}</MyLink>
             </li>
           );
         })}

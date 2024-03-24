@@ -1,0 +1,16 @@
+@import "../../../App.scss";
+
+.CreateResturantMainDiv {
+  display: flex;
+  flex-direction: column;
+  gap: $gapSmall;
+  label {
+    font-size: $fontBigSize;
+  }
+  input {
+    width: 30%;
+  }
+  select {
+    width: 30%;
+  }
+}
