@@ -10,12 +10,6 @@ export const Chefcolumns: GridColDef[] = [
     editable: true,
   },
   {
-    field: "description",
-    headerName: "Description",
-    width: 300,
-    editable: true,
-  },
-  {
     field: "image",
     headerName: "Image",
     width: 70,
@@ -25,6 +19,12 @@ export const Chefcolumns: GridColDef[] = [
         alt={"chef"}
       />
     ),
+  },
+  {
+    field: "description",
+    headerName: "Description",
+    width: 300,
+    editable: true,
   },
   {
     field: "isActive",
@@ -51,15 +51,20 @@ export const Restaurantscolumns: GridColDef[] = [
     editable: true,
   },
   {
-    field: "chef",
-    headerName: "Chef",
-    width: 150,
-    editable: true,
-  },
-  {
     field: "image",
     headerName: "Image",
-    width: 110,
+    width: 70,
+    renderCell: (params) => (
+      <MyRoundImage
+        url={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${params.value}.jpg`}
+        alt={"restaurants"}
+      />
+    ),
+  },
+  {
+    field: "chef",
+    headerName: "Chef",
+    width: 50,
     editable: true,
   },
   {
@@ -100,6 +105,17 @@ export const Dishescolumns: GridColDef[] = [
     editable: true,
   },
   {
+    field: "image",
+    headerName: "Image",
+    width: 70,
+    renderCell: (params) => (
+      <MyRoundImage
+        url={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${params.value}.jpg`}
+        alt={"dish"}
+      />
+    ),
+  },
+  {
     field: "Ingredients",
     headerName: "Ingredients",
     width: 300,
@@ -124,12 +140,6 @@ export const Dishescolumns: GridColDef[] = [
       }
       return "";
     },
-  },
-  {
-    field: "image",
-    headerName: "Image",
-    width: 110,
-    editable: true,
   },
   {
     field: "isActive",

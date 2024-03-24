@@ -31,6 +31,7 @@ import CreateRestaurant from "../shared/components/CreateRestaurant.component/Cr
 import CreateChef from "../shared/components/CreateChef.component/CreateChef.components";
 import { options } from "../shared/constants/backEnd.constants";
 import { mainPageText } from "../resources/mainPage.resources";
+import CreateDish from "../shared/components/CreateDish.component/CreateDish.components";
 
 export const MainPage = () => {
   const { collectionName } = useParams();
@@ -70,10 +71,13 @@ export const MainPage = () => {
   >(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleRowClick = useCallback((params: GridRowParams<ChefType>) => {
-    setSelectedRow(params.row);
-    setAnchorEl(document.body);
-  }, []);
+  const handleRowClick = useCallback(
+    (params: GridRowParams<ChefType | RestaurantType | DishType>) => {
+      setSelectedRow(params.row);
+      setAnchorEl(document.body);
+    },
+    []
+  );
 
   const handleButtonClick = useCallback(() => {
     setAnchorEl(document.body);
@@ -81,7 +85,6 @@ export const MainPage = () => {
   }, []);
 
   const handleClosePopover = useCallback(() => {
-    setSelectedRow(null);
     setAnchorEl(null);
     setIsCreate(false);
   }, []);
@@ -90,7 +93,7 @@ export const MainPage = () => {
   const updateModalInfoBaseCollection = useCallback(() => {
     switch (collectionName) {
       case options.chefs.key:
-        return <p>chefs update</p>;
+        return <CreateChef chef={selectedRow as ChefType} />;
         break;
       case options.restaurants.key:
         return <p>restaurants update</p>;
@@ -102,7 +105,7 @@ export const MainPage = () => {
         return <p>default update</p>;
         break;
     }
-  }, [collectionName, dispatch]);
+  }, [collectionName, selectedRow]);
 
   const createModalInfoBaseCollection = useCallback(() => {
     switch (collectionName) {
@@ -113,13 +116,13 @@ export const MainPage = () => {
         return <CreateRestaurant />;
         break;
       case options.dishes.key:
-        return <p>dishes create</p>;
+        return <CreateDish />;
         break;
       default:
         return <p>default</p>;
         break;
     }
-  }, [collectionName, dispatch]);
+  }, [collectionName]);
 
   const ModalInfoBaseCollection = useCallback(() => {
     if (isCreate) {
