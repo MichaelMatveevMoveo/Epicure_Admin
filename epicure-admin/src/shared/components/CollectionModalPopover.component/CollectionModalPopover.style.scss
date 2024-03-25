@@ -1,0 +1,8 @@
+@import "../../../App.scss";
+
+.popoverPaper {
+  width: 60%;
+  max-height: 60%;
+  background-color: $primaryColor;
+  overflow: auto;
+}

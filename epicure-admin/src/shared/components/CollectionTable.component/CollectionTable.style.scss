@@ -1,12 +1,11 @@
+@import "../../../App.scss";
 .box-root {
-  height: 500px;
   width: 100%;
   .dataGrid-root {
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    border: 2px solid #3e2f4e;
-    background-color: #3e2f4e;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    border: $border;
+    background-color: $SecondaryColor;
     color: #f5f5f5;
-    border-color: #f5f5f5;
 
     .MuiDataGrid-cell:hover {
       color: black;

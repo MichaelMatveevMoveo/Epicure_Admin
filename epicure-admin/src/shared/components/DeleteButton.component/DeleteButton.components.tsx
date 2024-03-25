@@ -17,7 +17,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
   return (
     <img
       src={
-        "https://t4.ftcdn.net/jpg/03/46/38/39/360_F_346383913_JQecl2DhpHy2YakDz1t3h0Tk3Ov8hikq.jpg"
+        "https://cdn1.vectorstock.com/i/1000x1000/08/25/delete-chalk-white-icon-on-black-background-vector-35240825.jpg"
       }
       className="deleteImg"
       onClick={deleteItemHandler}

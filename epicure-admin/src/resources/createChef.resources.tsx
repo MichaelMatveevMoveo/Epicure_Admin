@@ -1,5 +1,6 @@
 export const createChefText = {
-  title: "Create New Chef:",
+  titleCreate: "Create New Chef:",
+  titleUpdate: "Update Chef:",
   inputs: {
     name: "name",
     description: "description",

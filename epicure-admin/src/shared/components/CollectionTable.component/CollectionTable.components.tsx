@@ -19,6 +19,7 @@ import {
   RestaurantType,
 } from "../../../data/types/backEndData.types";
 
+import "./CollectionTable.style.scss";
 interface CollectionTableProps {
   collectionName: string;
   handleRowClick: (

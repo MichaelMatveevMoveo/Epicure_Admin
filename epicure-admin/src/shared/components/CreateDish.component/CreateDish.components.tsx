@@ -13,6 +13,7 @@ import { addDish, changeDish } from "../../../services/axios/dishes.axios";
 import { CLOUD_NAME, options } from "../../constants/backEnd.constants";
 import MyRoundImage from "../MyRoundImage.component/MyRoundImage.components";
 
+import "./CreateDish.style.scss";
 interface CreateDishProps {
   dish?: DishType | null;
 }
@@ -154,8 +155,8 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
   }, [fetchRestaurants]);
 
   return (
-    <div className="CreateResturantMainDiv">
-      <h2>{createDishText.title}</h2>
+    <div className="CreateDishMainDiv">
+      <h2>{dish ? createDishText.titleUpdate : createDishText.titleCreate}</h2>
       <label htmlFor="name">{createDishText.inputs.name}</label>
       <input
         type="text"
@@ -210,7 +211,12 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
         {ingredients.map((item) => (
           <li key={item}>
             {item}
-            <button onClick={() => removeIngredient(item)}>remove</button>
+            <button
+              className="DishRemoveButton"
+              onClick={() => removeIngredient(item)}
+            >
+              remove
+            </button>
           </li>
         ))}
       </ul>
@@ -228,7 +234,12 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
         {tags.map((item) => (
           <li key={item}>
             {item}
-            <button onClick={() => removeTag(item)}>remove</button>
+            <button
+              className="DishRemoveButton"
+              onClick={() => removeTag(item)}
+            >
+              remove
+            </button>
           </li>
         ))}
       </ul>

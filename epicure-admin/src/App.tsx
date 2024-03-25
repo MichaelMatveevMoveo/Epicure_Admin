@@ -8,11 +8,11 @@ import { HomePage } from "./pages/home.page";
 function App() {
   return (
     <div className="AppMainDiv">
-      <div className="AppSideBarDiv">
+      <div className="AppSideBarDiv container">
         <h1>{sideBar.title}</h1>
         <SideBar />
       </div>
-      <div className="AppMaincontantBarDiv">
+      <div className="AppMaincontantBarDiv container">
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/main/:collectionName" element={<MainPage />}></Route>

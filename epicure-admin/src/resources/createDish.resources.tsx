@@ -1,5 +1,6 @@
 export const createDishText = {
-  title: "Create New Restaurant:",
+  titleCreate: "Create New Dish:",
+  titleUpdate: "Update Dish:",
   inputs: {
     name: "name",
     restaurant: "restaurant:",

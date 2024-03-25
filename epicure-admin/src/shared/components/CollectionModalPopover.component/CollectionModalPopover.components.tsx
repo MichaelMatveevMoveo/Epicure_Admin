@@ -9,6 +9,7 @@ import { options } from "../../constants/backEnd.constants";
 import CreateChef from "../CreateChef.component/CreateChef.components";
 import CreateRestaurant from "../CreateRestaurant.component/CreateRestaurant.components";
 import CreateDish from "../CreateDish.component/CreateDish.components";
+import "./CollectionModalPopover.style.scss";
 
 interface CollectionModalPopoversProps {
   collectionName: string;
@@ -67,7 +68,7 @@ const CollectionModalPopover: React.FC<CollectionModalPopoversProps> = ({
         horizontal: "center",
       }}
       PaperProps={{
-        className: "popoverPaper", // Add the class name
+        className: "popoverPaper container", // Add the class name
       }}
     >
       {ModalInfoBaseCollection()}

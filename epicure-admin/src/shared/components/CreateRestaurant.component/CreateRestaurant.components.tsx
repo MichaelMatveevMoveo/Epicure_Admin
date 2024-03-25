@@ -19,6 +19,7 @@ import {
 } from "../../../services/axios/restaurants.axios";
 import { getDishesForRestaurant } from "../../../services/axios/dishes.axios";
 
+import "./CreateRestaurant.style.scss";
 interface CreateRestaurantProps {
   restaurant?: RestaurantType | null;
 }
@@ -126,8 +127,12 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
     }
   }, [fetchChefs, fetchDishes, restaurant]);
   return (
-    <div className="CreateResturantMainDiv">
-      <h2>{createRestaurantText.title}</h2>
+    <div className="CreateRestaurantMainDiv">
+      <h2>
+        {restaurant
+          ? createRestaurantText.titleUpdate
+          : createRestaurantText.titleCreate}
+      </h2>
       <label htmlFor="name">{createRestaurantText.inputs.name}</label>
       <input
         type="text"

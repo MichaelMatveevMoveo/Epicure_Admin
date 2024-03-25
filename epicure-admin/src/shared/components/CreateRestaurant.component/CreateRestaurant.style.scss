@@ -1,9 +1,11 @@
 @import "../../../App.scss";
 
-.CreateResturantMainDiv {
+.CreateRestaurantMainDiv {
   display: flex;
   flex-direction: column;
   gap: $gapSmall;
+  padding: $paddingNormal;
+  background-color: $primaryColor;
   label {
     font-size: $fontBigSize;
   }

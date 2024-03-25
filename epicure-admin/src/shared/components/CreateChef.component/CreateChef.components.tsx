@@ -73,7 +73,7 @@ const CreateChef: React.FC<CreateChefProps> = ({ chef = null }) => {
 
   return (
     <div className="CreateChefMainDiv">
-      <h2>{createChefText.title}</h2>
+      <h2>{chef ? createChefText.titleUpdate : createChefText.titleCreate}</h2>
       <label htmlFor="name">{createChefText.inputs.name}</label>
       <input
         type="text"

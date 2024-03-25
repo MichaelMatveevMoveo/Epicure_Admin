@@ -3,18 +3,18 @@ import { CLOUD_NAME, options } from "./backEnd.constants";
 import MyRoundImage from "../components/MyRoundImage.component/MyRoundImage.components";
 import DeleteButton from "../components/DeleteButton.component/DeleteButton.components";
 export const Chefcolumns: GridColDef[] = [
-  { field: "_id", headerName: "ID", width: 90 },
+  { field: "_id", headerName: "ID", width: 250 },
 
   {
     field: "name",
     headerName: "Name",
-    width: 150,
+    maxWidth: 250,
     editable: true,
   },
   {
     field: "image",
     headerName: "Image",
-    width: 70,
+    maxWidth: 250,
     renderCell: (params) => (
       <MyRoundImage
         url={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${params.value}.jpg`}
@@ -25,27 +25,27 @@ export const Chefcolumns: GridColDef[] = [
   {
     field: "description",
     headerName: "Description",
-    width: 300,
+    maxWidth: 250,
     editable: true,
   },
   {
     field: "isActive",
     headerName: "status",
     type: "boolean",
-    width: 100,
+    maxWidth: 250,
     editable: true,
   },
   {
     field: "isCeffOfWeek§",
     headerName: "Is Chef Week",
     type: "boolean",
-    width: 100,
+    maxWidth: 250,
     editable: true,
   },
   {
     field: "delete",
     headerName: "delete",
-    width: 70,
+    maxWidth: 250,
     renderCell: (params) => (
       <DeleteButton collectionName={options.chefs.key} itemId={params.row.id} />
     ),
@@ -57,13 +57,13 @@ export const Restaurantscolumns: GridColDef[] = [
   {
     field: "name",
     headerName: "Name",
-    width: 150,
+    maxWidth: 250,
     editable: true,
   },
   {
     field: "image",
     headerName: "Image",
-    width: 70,
+    maxWidth: 250,
     renderCell: (params) => (
       <MyRoundImage
         url={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${params.value}.jpg`}
@@ -74,40 +74,40 @@ export const Restaurantscolumns: GridColDef[] = [
   {
     field: "chef",
     headerName: "Chef",
-    width: 50,
+    maxWidth: 250,
     editable: true,
   },
   {
     field: "stars",
     headerName: "Stars",
     type: "number",
-    width: 100,
+    maxWidth: 250,
     editable: true,
   },
   {
     field: "isActive",
     headerName: "status",
     type: "boolean",
-    width: 100,
+    maxWidth: 250,
     editable: true,
   },
   {
     field: "isPopular",
     headerName: "Is Popular",
     type: "boolean",
-    width: 100,
+    maxWidth: 250,
     editable: true,
   },
   {
     field: "signatureDishId",
     headerName: "Signature Dish",
-    width: 100,
+    maxWidth: 250,
     editable: true,
   },
   {
     field: "delete",
     headerName: "delete",
-    width: 70,
+    maxWidth: 250,
     renderCell: (params) => (
       <DeleteButton
         collectionName={options.restaurants.key}
@@ -122,13 +122,13 @@ export const Dishescolumns: GridColDef[] = [
   {
     field: "name",
     headerName: "Name",
-    width: 150,
+    maxWidth: 250,
     editable: true,
   },
   {
     field: "image",
     headerName: "Image",
-    width: 70,
+    maxWidth: 250,
     renderCell: (params) => (
       <MyRoundImage
         url={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${params.value}.jpg`}
@@ -139,7 +139,7 @@ export const Dishescolumns: GridColDef[] = [
   {
     field: "Ingredients",
     headerName: "Ingredients",
-    width: 300,
+    maxWidth: 250,
     editable: true,
     valueGetter: (params) => {
       const ingredients = params.row.Ingredients;
@@ -152,7 +152,7 @@ export const Dishescolumns: GridColDef[] = [
   {
     field: "tags",
     headerName: "Tags",
-    width: 300,
+    maxWidth: 250,
     editable: true,
     valueGetter: (params) => {
       const tags = params.row.tags;
@@ -166,26 +166,26 @@ export const Dishescolumns: GridColDef[] = [
     field: "isActive",
     headerName: "status",
     type: "boolean",
-    width: 100,
+    maxWidth: 250,
     editable: true,
   },
   {
     field: "restaurant",
     headerName: "restaurant",
-    width: 100,
+    maxWidth: 250,
     editable: true,
   },
   {
     field: "price",
     headerName: "Price",
     type: "number",
-    width: 100,
+    maxWidth: 250,
     editable: true,
   },
   {
     field: "delete",
     headerName: "delete",
-    width: 70,
+    maxWidth: 250,
     renderCell: (params) => (
       <DeleteButton
         collectionName={options.restaurants.key}

@@ -56,18 +56,15 @@ export const MainPage = () => {
 
   return (
     <div className="MainPageDiv">
-      <h1>{collectionName}</h1>
+      <h1 className=" title-shadow">{collectionName}</h1>
       {size && <p>{mainPageText.numberOfEntries(size)}</p>}
+      <CollectionTable
+        collectionName={collectionName ? collectionName : ""}
+        handleRowClick={handleRowClick}
+      />
       <button onClick={handleButtonClick} className="MainPageCreateButton">
         {mainPageText.createButton(collectionName || "")}
       </button>
-      <div className="MainPageTableDiv">
-        <CollectionTable
-          collectionName={collectionName ? collectionName : ""}
-          handleRowClick={handleRowClick}
-        />
-      </div>
-
       <CollectionModalPopover
         collectionName={collectionName ? collectionName : ""}
         anchorEl={anchorEl}
