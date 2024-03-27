@@ -2,13 +2,14 @@ import {
   BACKEND_PORT,
   BACKEND_URL,
   BACKEND_V,
-  SERVER_API_PUBLIC_KEY,
 } from "../../shared/constants/backEnd.constants";
 import forge from "node-forge";
 import axios from "./appAxios";
 
 const encryptData = (password: string) => {
-  const publicKey = forge.pki.publicKeyFromPem(SERVER_API_PUBLIC_KEY);
+  const publicKey = forge.pki.publicKeyFromPem(
+    import.meta.env.VITE_SERVER_API_PUBLIC_KEY
+  );
   const encryptedPassword = forge.util.encode64(publicKey.encrypt(password));
   return encryptedPassword;
 };

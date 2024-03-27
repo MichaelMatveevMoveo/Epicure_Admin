@@ -1,5 +1,5 @@
 import { GridColDef } from "@mui/x-data-grid";
-import { CLOUD_NAME, options } from "./backEnd.constants";
+import { options } from "./backEnd.constants";
 import MyRoundImage from "../components/MyRoundImage.component/MyRoundImage.components";
 import DeleteButton from "../components/DeleteButton.component/DeleteButton.components";
 export const Chefcolumns: GridColDef[] = [
@@ -15,12 +15,7 @@ export const Chefcolumns: GridColDef[] = [
     field: "image",
     headerName: "Image",
     maxWidth: 250,
-    renderCell: (params) => (
-      <MyRoundImage
-        url={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${params.value}.jpg`}
-        alt={"chef"}
-      />
-    ),
+    renderCell: (params) => <MyRoundImage url={params.value} alt={"chef"} />,
   },
   {
     field: "description",
@@ -65,10 +60,7 @@ export const Restaurantscolumns: GridColDef[] = [
     headerName: "Image",
     maxWidth: 250,
     renderCell: (params) => (
-      <MyRoundImage
-        url={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${params.value}.jpg`}
-        alt={"restaurants"}
-      />
+      <MyRoundImage url={params.value} alt={"restaurants"} />
     ),
   },
   {
@@ -129,12 +121,7 @@ export const Dishescolumns: GridColDef[] = [
     field: "image",
     headerName: "Image",
     maxWidth: 250,
-    renderCell: (params) => (
-      <MyRoundImage
-        url={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${params.value}.jpg`}
-        alt={"dish"}
-      />
-    ),
+    renderCell: (params) => <MyRoundImage url={params.value} alt={"dish"} />,
   },
   {
     field: "Ingredients",

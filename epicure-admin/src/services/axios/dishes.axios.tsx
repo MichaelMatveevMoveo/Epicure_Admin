@@ -52,7 +52,7 @@ export const addDish = async (
   }
   try {
     const response = await axios.post(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/dishes`,
+      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/admin/dishes`,
       formData,
       {
         headers: {
@@ -102,7 +102,7 @@ export const changeDish = async (
   }
   try {
     const response = await axios.patch(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/dishes/${dish_id}`,
+      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/admin/dishes/${dish_id}`,
       formData,
       {
         headers: {

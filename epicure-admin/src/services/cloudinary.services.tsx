@@ -1,5 +1,4 @@
 import axios from "axios";
-import { API_KEY, CLOUD_NAME } from "../shared/constants/backEnd.constants";
 import { getSignatureForCloud } from "./axios/general.axios";
 import { cloudinaryImageCheckType } from "../data/types/cloudinary.types";
 
@@ -9,12 +8,14 @@ export const uploadImage = async (
   const signatureResponse = await getSignatureForCloud();
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("api_key", API_KEY);
+  formData.append("api_key", import.meta.env.VITE_API_KEY);
   formData.append("signature", signatureResponse.data.signature);
   formData.append("timestamp", signatureResponse.data.timestamp);
   try {
     const cloudinaryResponse = await axios.post(
-      `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+      `https://api.cloudinary.com/v1_1/${
+        import.meta.env.VITE_CLOUD_NAME
+      }/image/upload`,
       formData,
       {
         headers: {

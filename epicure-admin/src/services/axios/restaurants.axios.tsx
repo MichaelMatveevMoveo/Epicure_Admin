@@ -36,7 +36,7 @@ export const addRestaurant = async (
   }
   try {
     const response = await axios.post(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/restaurants`,
+      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/admin/restaurants`,
       formData,
       {
         headers: {
@@ -60,17 +60,13 @@ export const changeRestaurant = async (
   chef: string,
   stars: string,
   signatureDishId: string,
-  image?: string,
   imageprops?: cloudinaryImageCheckType
 ) => {
   const formData = new FormData();
   formData.append("name", name);
   formData.append("stars", stars);
   formData.append("chef", chef);
-  // formData.append("signatureDishId", signatureDishId);
-  if (image) {
-    formData.append("image", image);
-  }
+  formData.append("signatureDishId", signatureDishId);
   if (imageprops) {
     formData.append("image", imageprops.public_id);
     formData.append("version", imageprops.version);
@@ -78,7 +74,7 @@ export const changeRestaurant = async (
   }
   try {
     const response = await axios.patch(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/restaurants/${rest_id}`,
+      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/admin/restaurants/${rest_id}`,
       formData,
       {
         headers: {

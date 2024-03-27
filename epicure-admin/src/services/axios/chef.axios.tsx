@@ -25,7 +25,7 @@ export const addChef = async (
   }
   try {
     const response = await axios.post(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/chefs`,
+      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/admin/chefs`,
       formData,
       {
         headers: {
@@ -63,7 +63,7 @@ export const changeChef = async (
   }
   try {
     const response = await axios.patch(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/chefs/${chef_id}`,
+      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/admin/chefs/${chef_id}`,
       formData,
       {
         headers: {

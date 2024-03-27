@@ -10,7 +10,7 @@ import {
 } from "../../../services/axios/general.axios";
 import { createDishText } from "../../../resources/createDish.resources";
 import { addDish, changeDish } from "../../../services/axios/dishes.axios";
-import { CLOUD_NAME, options } from "../../constants/backEnd.constants";
+import { options } from "../../constants/backEnd.constants";
 import MyRoundImage from "../MyRoundImage.component/MyRoundImage.components";
 
 import "./CreateDish.style.scss";
@@ -250,7 +250,9 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
           <p>{createDishText.inputs.oldImage_Image}</p>
           <div className="CreateUserOldImage">
             <MyRoundImage
-              url={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${dish.image}.jpg`}
+              url={`https://res.cloudinary.com/${
+                import.meta.env.VITE_CLOUD_NAME
+              }/image/upload/${dish.image}.jpg`}
               alt={"restaurant"}
             />
           </div>

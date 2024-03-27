@@ -12,10 +12,12 @@ import {
 import { setIsLogin } from "../../redux-toolkit/slices/loginStatus.slice";
 
 const handleLoginState = () => {
-  // Dispatch the action to update login state
-  setIsLogin(false); // Example action
-  // Optionally, you can redirect the user to the login page here
-  window.location.href = "/login";
+  if (window.location.pathname !== "/login") {
+    // Dispatch the action to update login state
+    setIsLogin(false); // Example action
+    // Optionally, you can redirect the user to the login page here
+    window.location.href = "/login";
+  }
 };
 
 axios.interceptors.request.use(
@@ -36,7 +38,6 @@ axios.interceptors.request.use(
 
     const token = getTokenFromCookies();
     if (!token) {
-      console.log("po");
       handleLoginState();
       return config;
     }

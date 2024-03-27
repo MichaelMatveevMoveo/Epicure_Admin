@@ -12,7 +12,7 @@ import {
 import { createRestaurantText } from "../../../resources/createRestaurant.resources";
 import { uploadImage } from "../../../services/cloudinary.services";
 import MyRoundImage from "../MyRoundImage.component/MyRoundImage.components";
-import { CLOUD_NAME, options } from "../../constants/backEnd.constants";
+import { options } from "../../constants/backEnd.constants";
 import {
   addRestaurant,
   changeRestaurant,
@@ -83,7 +83,6 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
             selectedChefId,
             stars,
             selectedDishId,
-            undefined,
             newImageData
           )
         );
@@ -94,8 +93,7 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
             restName,
             selectedChefId,
             stars,
-            selectedDishId,
-            restaurant?.image
+            selectedDishId
           )
         );
       }
@@ -171,7 +169,7 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
           setStars(event.currentTarget.value);
         }}
       >
-        {[1, 2, 3, 4, 5].map((value) => (
+        {[0, 1, 2, 3, 4, 5].map((value) => (
           <option key={value} value={value}>
             {value}
           </option>
@@ -189,6 +187,9 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
             setSelectedDishId(event.currentTarget.value);
           }}
         >
+          <option key={undefined} value={undefined}>
+            ----
+          </option>
           {dishes.map((value) => {
             return (
               <option key={value._id} value={value._id}>
@@ -204,7 +205,9 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
           <p>{createRestaurantText.inputs.oldImage_Image}</p>
           <div className="CreateUserOldImage">
             <MyRoundImage
-              url={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${restaurant.image}.jpg`}
+              url={`https://res.cloudinary.com/${
+                import.meta.env.VITE_CLOUD_NAME
+              }/image/upload/${restaurant.image}.jpg`}
               alt={"restaurant"}
             />
           </div>

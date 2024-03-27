@@ -3,7 +3,7 @@ import { createChefText } from "../../../resources/createChef.resources";
 import { addChef, changeChef } from "../../../services/axios/chef.axios";
 import { deleteItemFromCollection } from "../../../services/axios/general.axios";
 import { uploadImage } from "../../../services/cloudinary.services";
-import { CLOUD_NAME, options } from "../../constants/backEnd.constants";
+import { options } from "../../constants/backEnd.constants";
 import MyRoundImage from "../MyRoundImage.component/MyRoundImage.components";
 import "./CreateChef.style.scss";
 import { useCallback, useState } from "react";
@@ -100,7 +100,9 @@ const CreateChef: React.FC<CreateChefProps> = ({ chef = null }) => {
           <p>{createChefText.inputs.oldImage_Image}</p>
           <div className="CreateUserOldImage">
             <MyRoundImage
-              url={`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${chef.image}.jpg`}
+              url={`https://res.cloudinary.com/${
+                import.meta.env.VITE_CLOUD_NAME
+              }/image/upload/${chef.image}.jpg`}
               alt={"dish"}
             />
           </div>

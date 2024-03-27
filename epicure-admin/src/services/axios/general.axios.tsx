@@ -30,7 +30,7 @@ export const deleteItemFromCollection = async (
 ) => {
   try {
     axios.delete(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/${CollectionName}/${item_id}`
+      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/admin/${CollectionName}/${item_id}`
     );
     return deleteChefResource.onSuccuss;
   } catch (error) {
