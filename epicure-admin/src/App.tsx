@@ -3,7 +3,8 @@ import SideBar from "./shared/components/SideBar.component/SideBar.components";
 import { sideBar } from "./resources/sideBar.resources";
 import { Routes, Route } from "react-router-dom";
 import { MainPage } from "./pages/main.page";
-import { HomePage } from "./pages/home.page";
+import { LoginPage } from "./pages/login.page";
+import { HomePage } from "./pages/homePage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <div className="AppMaincontantBarDiv container">
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
+          <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/main/:collectionName" element={<MainPage />}></Route>
         </Routes>
       </div>

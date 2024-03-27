@@ -5,4 +5,6 @@ export const mainPageText = {
   createButton: (collectionName: string) => {
     return `add ${collectionName}`;
   },
+  login: "you have to login to make changes in the database",
+  loginButton: "login page",
 };

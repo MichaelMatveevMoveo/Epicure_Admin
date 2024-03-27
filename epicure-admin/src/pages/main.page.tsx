@@ -24,7 +24,7 @@ export const MainPage = () => {
   const dispatch = useAppDispatch();
 
   const size = useAppSelector((state: RootState) => state.collection.size);
-
+  const isLogin = useAppSelector((state: RootState) => state.cookies.isLogin);
   // click handlers for modal
   const [selectedRow, setSelectedRow] = useState<
     ChefType | RestaurantType | DishType | null
@@ -33,10 +33,12 @@ export const MainPage = () => {
 
   const handleRowClick = useCallback(
     (params: GridRowParams<ChefType | RestaurantType | DishType>) => {
-      setSelectedRow(params.row);
-      setAnchorEl(document.body);
+      if (isLogin) {
+        setSelectedRow(params.row);
+        setAnchorEl(document.body);
+      }
     },
-    []
+    [isLogin]
   );
 
   const handleButtonClick = useCallback(() => {
@@ -54,17 +56,39 @@ export const MainPage = () => {
     }
   }, [collectionName, dispatch]);
 
+  useEffect(() => {
+    if (collectionName) {
+      dispatch(getCollectionSizeThunk(collectionName));
+    }
+  }, [collectionName, dispatch]);
+
   return (
     <div className="MainPageDiv">
       <h1 className=" title-shadow">{collectionName}</h1>
       {size && <p>{mainPageText.numberOfEntries(size)}</p>}
+
       <CollectionTable
         collectionName={collectionName ? collectionName : ""}
         handleRowClick={handleRowClick}
       />
-      <button onClick={handleButtonClick} className="MainPageCreateButton">
-        {mainPageText.createButton(collectionName || "")}
-      </button>
+      {isLogin && (
+        <button onClick={handleButtonClick} className="MainPageCreateButton">
+          {mainPageText.createButton(collectionName || "")}
+        </button>
+      )}
+      {!isLogin && (
+        <>
+          <p>{mainPageText.login}</p>
+          <button
+            onClick={() => {
+              window.location.href = "/login";
+            }}
+            className="MainPageCreateButton"
+          >
+            {mainPageText.loginButton}
+          </button>
+        </>
+      )}
       <CollectionModalPopover
         collectionName={collectionName ? collectionName : ""}
         anchorEl={anchorEl}

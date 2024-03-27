@@ -1,9 +1,12 @@
-import React from "react";
 import "./SideBar.style.scss";
 import MyLink from "../../../data/utils/MyLink.util/MyLink.utils";
 import { options } from "../../constants/backEnd.constants";
+import { useAppSelector } from "../../hooks/hooks";
+import { RootState } from "../../../redux-toolkit/store/store";
+import LogOutButton from "../LogOutButton.component/LogOutButton.components";
 
 const SideBar = () => {
+  const isLogin = useAppSelector((state: RootState) => state.cookies.isLogin);
   return (
     <div className="SideBarMainDiv">
       <ul>
@@ -15,6 +18,18 @@ const SideBar = () => {
           );
         })}
       </ul>
+      <div className="sideBarButtonLog">
+        {!isLogin && (
+          <button
+            onClick={() => {
+              window.location.href = "/login";
+            }}
+          >
+            login
+          </button>
+        )}
+        {isLogin && <LogOutButton />}
+      </div>
     </div>
   );
 };

@@ -1,10 +1,20 @@
 @import "../../../App.scss";
 
 .SideBarMainDiv {
-  padding: $paddingSmall $paddingBig;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: $paddingSmall $paddingBig; /* Sets padding using SCSS variables */
+
   ul {
     display: flex;
     flex-direction: column;
-    gap: $gapSmall;
+    gap: $gapSmall; /* Sets gap between items in the ul using SCSS variable */
+  }
+
+  .sideBarButtonLog {
+    margin-top: auto;
+    margin-bottom: 20px;
+    align-self: flex-end; /* Aligns .sideBarButtonLog to the end of the flex container */
   }
 }

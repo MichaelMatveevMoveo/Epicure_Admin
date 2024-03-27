@@ -1,0 +1,15 @@
+@import "../App.scss";
+.divMain {
+  display: flex;
+  flex-direction: column;
+  gap: $gapSmall;
+  input {
+    width: 30%;
+  }
+  .pInfoLogin {
+    text-decoration: underline;
+  }
+  .pAlertLogin {
+    color: red;
+  }
+}
