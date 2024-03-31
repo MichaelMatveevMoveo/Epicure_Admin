@@ -1,9 +1,5 @@
 import axios from "axios";
-import {
-  BACKEND_PORT,
-  BACKEND_URL,
-  BACKEND_V,
-} from "../../shared/constants/backEnd.constants";
+
 import {
   CreateRestaurantResource,
   updateRestaurantResource,
@@ -15,7 +11,11 @@ export const getRestaurantsWithNameAndNotId = async (
   limit: number
 ) => {
   return await axios.get(
-    `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/restaurants/chefNameAndsignatureDishName/${offset}/${limit}`
+    `${import.meta.env.VITE_PROTOCOL}://${
+      import.meta.env.VITE_BACKEND_URL_FOR_REST
+    }/${
+      import.meta.env.VITE_API_V
+    }/restaurants/chefNameAndsignatureDishName/${offset}/${limit}`
   );
 };
 
@@ -36,7 +36,9 @@ export const addRestaurant = async (
   }
   try {
     const response = await axios.post(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/admin/restaurants`,
+      `${import.meta.env.VITE_PROTOCOL}://${
+        import.meta.env.VITE_BACKEND_URL_FOR_REST
+      }/${import.meta.env.VITE_API_V}/admin/restaurants`,
       formData,
       {
         headers: {
@@ -74,7 +76,9 @@ export const changeRestaurant = async (
   }
   try {
     const response = await axios.patch(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/admin/restaurants/${rest_id}`,
+      `${import.meta.env.VITE_PROTOCOL}://${
+        import.meta.env.VITE_BACKEND_URL_FOR_REST
+      }/${import.meta.env.VITE_API_V}/admin/restaurants/${rest_id}`,
       formData,
       {
         headers: {

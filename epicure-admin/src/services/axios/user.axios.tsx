@@ -1,8 +1,3 @@
-import {
-  BACKEND_PORT,
-  BACKEND_URL,
-  BACKEND_V,
-} from "../../shared/constants/backEnd.constants";
 import forge from "node-forge";
 import axios from "./appAxios";
 
@@ -19,7 +14,9 @@ export const login = async (username: string, password: string) => {
 
   try {
     const response = await axios.post(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/users/login`,
+      `${import.meta.env.VITE_PROTOCOL}://${
+        import.meta.env.VITE_BACKEND_URL_FOR_REST
+      }/${import.meta.env.VITE_API_V}/users/login`,
       {
         username,
         password: encryptedPassword,

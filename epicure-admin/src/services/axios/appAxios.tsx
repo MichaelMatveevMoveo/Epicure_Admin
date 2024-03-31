@@ -1,11 +1,6 @@
 import axios from "axios";
 
 import {
-  BACKEND_PORT,
-  BACKEND_URL,
-  BACKEND_V,
-} from "../../shared/constants/backEnd.constants";
-import {
   getTokenFromCookies,
   removeTokenFromCookies,
 } from "../../data/utils/MyLink.util/cookies";
@@ -29,7 +24,11 @@ axios.interceptors.request.use(
     if (
       !(
         config.method !== "get" &&
-        config.url.includes(`${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}`) &&
+        config.url.includes(
+          `${import.meta.env.VITE_PROTOCOL}://${
+            import.meta.env.VITE_BACKEND_URL_FOR_REST
+          }/${import.meta.env.VITE_API_V}`
+        ) &&
         !config.url.includes("/login")
       )
     ) {

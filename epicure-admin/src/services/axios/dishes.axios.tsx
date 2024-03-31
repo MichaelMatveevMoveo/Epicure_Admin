@@ -1,10 +1,5 @@
 import axios from "axios";
 import {
-  BACKEND_PORT,
-  BACKEND_URL,
-  BACKEND_V,
-} from "../../shared/constants/backEnd.constants";
-import {
   CreateDishResource,
   updateDishResource,
 } from "../../resources/general.axios.resources";
@@ -15,13 +10,19 @@ export const getDishesWithNamesAndNotIds = async (
   limit: number
 ) => {
   return await axios.get(
-    `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/dishes/dishesWithRestaurantName/${offset}/${limit}`
+    `${import.meta.env.VITE_PROTOCOL}://${
+      import.meta.env.VITE_BACKEND_URL_FOR_REST
+    }/${
+      import.meta.env.VITE_API_V
+    }/dishes/dishesWithRestaurantName/${offset}/${limit}`
   );
 };
 
 export const getDishesForRestaurant = async (id: string) => {
   return await axios.get(
-    `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/dishes/forRestaurant/${id}`
+    `${import.meta.env.VITE_PROTOCOL}://${
+      import.meta.env.VITE_BACKEND_URL_FOR_REST
+    }/${import.meta.env.VITE_API_V}/dishes/forRestaurant/${id}`
   );
 };
 
@@ -52,7 +53,9 @@ export const addDish = async (
   }
   try {
     const response = await axios.post(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/admin/dishes`,
+      `${import.meta.env.VITE_PROTOCOL}://${
+        import.meta.env.VITE_BACKEND_URL_FOR_REST
+      }/${import.meta.env.VITE_API_V}/admin/dishes`,
       formData,
       {
         headers: {
@@ -102,7 +105,9 @@ export const changeDish = async (
   }
   try {
     const response = await axios.patch(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/admin/dishes/${dish_id}`,
+      `${import.meta.env.VITE_PROTOCOL}://${
+        import.meta.env.VITE_BACKEND_URL_FOR_REST
+      }/${import.meta.env.VITE_API_V}/admin/dishes/${dish_id}`,
       formData,
       {
         headers: {

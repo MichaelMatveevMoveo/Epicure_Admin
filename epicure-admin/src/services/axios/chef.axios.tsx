@@ -1,11 +1,6 @@
 import axios from "axios";
 import { cloudinaryImageCheckType } from "../../data/types/cloudinary.types";
 import {
-  BACKEND_PORT,
-  BACKEND_URL,
-  BACKEND_V,
-} from "../../shared/constants/backEnd.constants";
-import {
   CreateChefResource,
   updateChefResource,
 } from "../../resources/general.axios.resources";
@@ -25,7 +20,9 @@ export const addChef = async (
   }
   try {
     const response = await axios.post(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/admin/chefs`,
+      `${import.meta.env.VITE_PROTOCOL}://${
+        import.meta.env.VITE_BACKEND_URL_FOR_REST
+      }/${import.meta.env.VITE_API_V}/admin/chefs`,
       formData,
       {
         headers: {
@@ -63,7 +60,9 @@ export const changeChef = async (
   }
   try {
     const response = await axios.patch(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/admin/chefs/${chef_id}`,
+      `${import.meta.env.VITE_PROTOCOL}://${
+        import.meta.env.VITE_BACKEND_URL_FOR_REST
+      }/${import.meta.env.VITE_API_V}/admin/chefs/${chef_id}`,
       formData,
       {
         headers: {

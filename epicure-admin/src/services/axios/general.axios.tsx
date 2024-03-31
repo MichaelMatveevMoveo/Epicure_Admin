@@ -1,26 +1,28 @@
 import axios from "axios";
-import {
-  BACKEND_PORT,
-  BACKEND_URL,
-  BACKEND_V,
-} from "../../shared/constants/backEnd.constants";
+
 import { deleteChefResource } from "../../resources/general.axios.resources";
 
 export const getCollectionSize = async (CollectionName: string) => {
   return await axios.get(
-    `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/${CollectionName}/collection/size`
+    `${import.meta.env.VITE_PROTOCOL}://${
+      import.meta.env.VITE_BACKEND_URL_FOR_REST
+    }/${import.meta.env.VITE_API_V}/${CollectionName}/collection/size`
   );
 };
 
 export const getAllSize = async (CollectionName: string) => {
   return await axios.get(
-    `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/${CollectionName}`
+    `${import.meta.env.VITE_PROTOCOL}://${
+      import.meta.env.VITE_BACKEND_URL_FOR_REST
+    }/${import.meta.env.VITE_API_V}/${CollectionName}`
   );
 };
 
 export const getSignatureForCloud = async () => {
   return await axios.get(
-    `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/cloud/get-signature`
+    `${import.meta.env.VITE_PROTOCOL}://${
+      import.meta.env.VITE_BACKEND_URL_FOR_REST
+    }/${import.meta.env.VITE_API_V}/cloud/get-signature`
   );
 };
 
@@ -30,7 +32,9 @@ export const deleteItemFromCollection = async (
 ) => {
   try {
     axios.delete(
-      `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/admin/${CollectionName}/${item_id}`
+      `${import.meta.env.VITE_PROTOCOL}://${
+        import.meta.env.VITE_BACKEND_URL_FOR_REST
+      }/${import.meta.env.VITE_API_V}/admin/${CollectionName}/${item_id}`
     );
     return deleteChefResource.onSuccuss;
   } catch (error) {
@@ -44,6 +48,10 @@ export const getCollectionItemsPage = async (
   limit: number
 ) => {
   return await axios.get(
-    `${BACKEND_URL}:${BACKEND_PORT}${BACKEND_V}/${CollectionName}/getPartOfItems/:${offset}/:${limit}`
+    `${import.meta.env.VITE_PROTOCOL}://${
+      import.meta.env.VITE_BACKEND_URL_FOR_REST
+    }/${
+      import.meta.env.VITE_API_V
+    }/${CollectionName}/getPartOfItems/:${offset}/:${limit}`
   );
 };
