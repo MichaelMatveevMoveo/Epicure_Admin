@@ -73,6 +73,14 @@ button {
       font-size: $fontBigSize;
     }
   }
+  .LinkText {
+    color: $highLightFontColor;
+  }
+  .LinkText:hover,
+  .LinkText:focus {
+    color: $highLightFontColor;
+    text-decoration: underline;
+  }
   .AppMaincontantBarDiv {
     max-width: calc(100% - 200px);
     flex-grow: 1;

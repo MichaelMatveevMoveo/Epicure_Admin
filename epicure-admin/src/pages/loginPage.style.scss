@@ -2,12 +2,18 @@
 .divMain {
   display: flex;
   flex-direction: column;
-  gap: $gapSmall;
-  input {
-    width: 30%;
+  gap: $gapNormal;
+  .divLoginInputs {
+    display: flex;
+    flex-direction: column;
+    gap: $gapSmall;
+    input {
+      width: 30%;
+    }
   }
   .pInfoLogin {
     text-decoration: underline;
+    color: #ff9999;
   }
   .pAlertLogin {
     color: red;

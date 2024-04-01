@@ -13,7 +13,9 @@ const LogOutButton = () => {
   }, [dispatch]);
   return (
     <div>
-      <button onClick={handelClickLogOut}>logout</button>
+      <p className="LinkText" onClick={handelClickLogOut}>
+        logout
+      </p>
     </div>
   );
 };

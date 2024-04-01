@@ -3,7 +3,6 @@ import { login } from "../services/axios/user.axios";
 
 import "./loginPage.style.scss";
 import { mainLoginText } from "../resources/loginPage.resources";
-import { options } from "../shared/constants/backEnd.constants";
 import { useAppDispatch, useAppSelector } from "../shared/hooks/hooks";
 import { setIsLogin } from "../redux-toolkit/slices/loginStatus.slice";
 import { RootState } from "../redux-toolkit/store/store";
@@ -19,7 +18,6 @@ export const LoginPage = () => {
   const handelClickLogIn = useCallback(async () => {
     if (await login(username, password)) {
       dispatch(setIsLogin(true));
-      window.location.href = `/main/${options.chefs.key}`;
     } else {
       setMassage(true);
     }
@@ -27,8 +25,9 @@ export const LoginPage = () => {
 
   if (isLogin) {
     return (
-      <div>
-        <p>you are already login</p>
+      <div className="divMain">
+        <h1>welcome!!!</h1>
+        <p>now you can edit the databases.</p>
         <LogOutButton />
       </div>
     );
@@ -37,22 +36,24 @@ export const LoginPage = () => {
     <div className="divMain">
       <h1>{mainLoginText.title}</h1>
       <p className="pInfoLogin">{mainLoginText.info}</p>
-      <label htmlFor="username">{mainLoginText.username}</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        value={username}
-        onChange={(event) => setUsername(event.currentTarget.value)}
-      ></input>
-      <label htmlFor="password">{mainLoginText.password}</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        value={password}
-        onChange={(event) => setPassword(event.currentTarget.value)}
-      ></input>
+      <div className="divLoginInputs">
+        <label htmlFor="username">{mainLoginText.username}</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          value={username}
+          onChange={(event) => setUsername(event.currentTarget.value)}
+        ></input>
+        <label htmlFor="password">{mainLoginText.password}</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={password}
+          onChange={(event) => setPassword(event.currentTarget.value)}
+        ></input>
+      </div>
       {massage && (
         <p className="pAlertLogin">
           {mainLoginText.alertBadUserNameAndPassword}

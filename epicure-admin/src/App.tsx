@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import { MainPage } from "./pages/main.page";
 import { LoginPage } from "./pages/login.page";
 import { HomePage } from "./pages/homePage";
+import { appRoutes } from "./shared/constants/route.constants";
 
 function App() {
   return (
@@ -15,9 +16,12 @@ function App() {
       </div>
       <div className="AppMaincontantBarDiv container">
         <Routes>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="/login" element={<LoginPage />}></Route>
-          <Route path="/main/:collectionName" element={<MainPage />}></Route>
+          <Route path={appRoutes.homePage} element={<HomePage />}></Route>
+          <Route path={appRoutes.login} element={<LoginPage />}></Route>
+          <Route
+            path={`${appRoutes.databases}/:collectionName`}
+            element={<MainPage />}
+          ></Route>
         </Routes>
       </div>
     </div>

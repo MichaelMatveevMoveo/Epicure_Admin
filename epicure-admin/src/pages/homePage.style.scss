@@ -1,0 +1,14 @@
+@import "../App.scss";
+.divMainHomePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $gapBig;
+  padding: $paddingBig;
+  h1 {
+    font-size: 5em;
+  }
+  h2 {
+    font-size: 2em;
+  }
+}

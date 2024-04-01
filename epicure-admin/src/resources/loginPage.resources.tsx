@@ -1,9 +1,9 @@
 export const mainLoginText = {
-  title: "login page:",
+  title: "Login:",
   username: "username:",
   password: "password:",
-  loginButton: "login:",
+  loginButton: "login",
   logOutButton: "logout",
   alertBadUserNameAndPassword: "insert bad username or password",
-  info: "you have to login before making changes in the database",
+  info: "you have to login before making changes in the database!!!",
 };

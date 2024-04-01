@@ -4,6 +4,7 @@ import { useAppSelector } from "../../hooks/hooks";
 import { RootState } from "../../../redux-toolkit/store/store";
 import LogOutButton from "../LogOutButton.component/LogOutButton.components";
 import "./SideBar.Style.scss";
+import { appRoutes } from "../../constants/route.constants";
 
 const SideBar = () => {
   const isLogin = useAppSelector((state: RootState) => state.cookies.isLogin);
@@ -13,20 +14,23 @@ const SideBar = () => {
         {Object.values(options).map((value) => {
           return (
             <li key={value.key}>
-              <MyLink to={`/main/${value.key}`}>{value.value}</MyLink>
+              <MyLink to={`${appRoutes.databases}/${value.key}`}>
+                {value.value}
+              </MyLink>
             </li>
           );
         })}
       </ul>
       <div className="sideBarButtonLog">
         {!isLogin && (
-          <button
+          <p
+            className="LinkText"
             onClick={() => {
-              window.location.href = "/login";
+              window.location.href = appRoutes.login;
             }}
           >
-            login
-          </button>
+            Login
+          </p>
         )}
         {isLogin && <LogOutButton />}
       </div>
