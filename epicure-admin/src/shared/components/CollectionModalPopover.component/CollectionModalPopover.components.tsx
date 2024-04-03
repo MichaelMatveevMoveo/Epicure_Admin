@@ -57,6 +57,7 @@ const CollectionModalPopover: React.FC<CollectionModalPopoversProps> = ({
   return (
     <Popover
       open={Boolean(anchorEl)}
+      className="custom-popover"
       anchorEl={anchorEl}
       onClose={handleClosePopover}
       anchorOrigin={{
