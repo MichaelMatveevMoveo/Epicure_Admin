@@ -75,7 +75,7 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
         setSendresponse(CreateRestaurantResource.onFail);
       }
     }
-  }, [fileUpload, restName, selectedChefId, stars]);
+  }, [dispatch, fileUpload, restName, selectedChefId, stars]);
 
   const updateRestaurantHandler = useCallback(async () => {
     let newImageData = null;
@@ -118,15 +118,39 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
   //   }
   // }, [restaurant]);
 
-  const fetchChefs = useCallback(async (collectionName: string) => {
-    const response = await getAllSize(collectionName);
-    setChefs(response.data);
-  }, []);
+  const fetchChefs = useCallback(
+    async (collectionName: string) => {
+      const response = await getAllSize(collectionName);
+      setChefs(response.data);
+      if (!restaurant) {
+        return;
+      }
+      const chef = response.data.find(
+        (chef: ChefType) => chef.name == restaurant.chef
+      );
+      if (chef) {
+        setSelectedChefId(chef.id);
+      }
+    },
+    [restaurant]
+  );
 
-  const fetchDishes = useCallback(async (id: string) => {
-    const response = await getDishesForRestaurant(id);
-    setDishes(response.data);
-  }, []);
+  const fetchDishes = useCallback(
+    async (id: string) => {
+      const response = await getDishesForRestaurant(id);
+      setDishes(response.data);
+      if (!restaurant) {
+        return;
+      }
+      const dish = response.data.find(
+        (dish: DishType) => dish.name == restaurant.signatureDishId
+      );
+      if (dish) {
+        setSelectedDishId(dish._id);
+      }
+    },
+    [restaurant]
+  );
 
   useEffect(() => {
     fetchChefs("chefs");
@@ -157,6 +181,7 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
         <select
           name="chefs"
           id="chefs"
+          value={selectedChefId}
           onChange={(event) => {
             setSelectedChefId(event.currentTarget.value);
           }}
@@ -175,6 +200,7 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
       <select
         name="stars"
         id="stars"
+        value={stars}
         onChange={(event) => {
           setStars(event.currentTarget.value);
         }}
@@ -193,6 +219,7 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
         <select
           name="signatureDishId"
           id="signatureDishId"
+          value={selectedDishId}
           onChange={(event) => {
             setSelectedDishId(event.currentTarget.value);
           }}
