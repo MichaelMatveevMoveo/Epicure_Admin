@@ -165,19 +165,22 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
   //   }
   // }, [dish]);
 
-  const fetchRestaurants = useCallback(async (collectionName: string) => {
-    const response = await getAllSize(collectionName);
-    setRestaurants(response.data);
-    if (!dish) {
-      return;
-    }
-    const restaurant = response.data.find(
-      (restaurant: RestaurantType) => restaurant.name == dish.restaurant
-    );
-    if (restaurant) {
-      setSelectedRestaurantId(restaurant._id);
-    }
-  }, []);
+  const fetchRestaurants = useCallback(
+    async (collectionName: string) => {
+      const response = await getAllSize(collectionName);
+      setRestaurants(response.data);
+      if (!dish) {
+        return;
+      }
+      const restaurant = response.data.find(
+        (restaurant: RestaurantType) => restaurant.name == dish.restaurant
+      );
+      if (restaurant) {
+        setSelectedRestaurantId(restaurant._id);
+      }
+    },
+    [dish]
+  );
 
   useEffect(() => {
     fetchRestaurants("restaurants");
