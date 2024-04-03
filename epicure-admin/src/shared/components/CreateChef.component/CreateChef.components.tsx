@@ -1,9 +1,14 @@
 import { ChefType } from "../../../data/types/backEndData.types";
+import { getCollectionSizeThunk } from "../../../redux-toolkit/thunks/general.thanks";
 import { createChefText } from "../../../resources/createChef.resources";
+import {
+  CreateChefResource,
+  updateChefResource,
+} from "../../../resources/general.axios.resources";
 import { addChef, changeChef } from "../../../services/axios/chef.axios";
-import { deleteItemFromCollection } from "../../../services/axios/general.axios";
 import { uploadImage } from "../../../services/cloudinary.services";
 import { options } from "../../constants/backEnd.constants";
+import { useAppDispatch } from "../../hooks/hooks";
 import MyRoundImage from "../MyRoundImage.component/MyRoundImage.components";
 import "./CreateChef.style.scss";
 import { useCallback, useState } from "react";
@@ -18,6 +23,8 @@ const CreateChef: React.FC<CreateChefProps> = ({ chef = null }) => {
   );
   const [sendresponse, setSendresponse] = useState<string | null>(null);
   const [fileUpload, setFileUpload] = useState<File | null>(null);
+
+  const dispatch = useAppDispatch();
 
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,41 +42,56 @@ const CreateChef: React.FC<CreateChefProps> = ({ chef = null }) => {
       newImageData = await uploadImage(fileUpload);
     }
     if (newImageData) {
-      setSendresponse(await addChef(chefName, chefDescription, newImageData));
+      if (await addChef(chefName, chefDescription, newImageData)) {
+        dispatch(getCollectionSizeThunk(options.chefs.key));
+        setSendresponse(CreateChefResource.onSuccuss);
+      } else {
+        setSendresponse(CreateChefResource.onFail);
+      }
     }
-  }, [fileUpload, chefName, chefDescription]);
+  }, [fileUpload, chefName, chefDescription, dispatch]);
 
   const updateChefHandler = useCallback(async () => {
     let newImageData = null;
     if (fileUpload) {
       newImageData = await uploadImage(fileUpload);
     }
-    if (chef) {
-      if (newImageData) {
-        setSendresponse(
-          await changeChef(
-            chef?._id,
-            chefName,
-            chefDescription,
-            undefined,
-            newImageData
-          )
-        );
-      } else {
-        setSendresponse(
-          await changeChef(chef?._id, chefName, chefDescription, chef?.image)
-        );
-      }
+    if (!chef) {
+      setSendresponse(updateChefResource.onFail);
+      return;
+    }
+
+    let isSuccesses = false;
+    if (newImageData) {
+      isSuccesses = await changeChef(
+        chef?._id,
+        chefName,
+        chefDescription,
+        undefined,
+        newImageData
+      );
+    } else {
+      isSuccesses = await changeChef(
+        chef?._id,
+        chefName,
+        chefDescription,
+        chef?.image
+      );
+    }
+    if (isSuccesses) {
+      setSendresponse(updateChefResource.onSuccuss);
+    } else {
+      setSendresponse(updateChefResource.onFail);
     }
   }, [fileUpload, chef, chefName, chefDescription]);
 
-  const deleteChefHandler = useCallback(async () => {
-    if (chef) {
-      setSendresponse(
-        await deleteItemFromCollection(options.chefs.key, chef._id)
-      );
-    }
-  }, [chef]);
+  // const deleteChefHandler = useCallback(async () => {
+  //   if (chef) {
+  //     setSendresponse(
+  //       await deleteItemFromCollection(options.chefs.key, chef._id)
+  //     );
+  //   }
+  // }, [chef]);
 
   return (
     <div className="CreateChefMainDiv">
@@ -99,12 +121,7 @@ const CreateChef: React.FC<CreateChefProps> = ({ chef = null }) => {
         <div>
           <p>{createChefText.inputs.oldImage_Image}</p>
           <div className="CreateUserOldImage">
-            <MyRoundImage
-              url={`https://res.cloudinary.com/${
-                import.meta.env.VITE_CLOUD_NAME
-              }/image/upload/${chef.image}.jpg`}
-              alt={"dish"}
-            />
+            <MyRoundImage url={chef.image} alt={"dish"} />
           </div>
         </div>
       )}
@@ -114,7 +131,6 @@ const CreateChef: React.FC<CreateChefProps> = ({ chef = null }) => {
       <button onClick={chef ? updateChefHandler : createChefHandler}>
         {chef ? "update" : "create"}
       </button>
-      {chef && <button onClick={deleteChefHandler}>delete</button>}
     </div>
   );
 };

@@ -35,7 +35,7 @@ export const LoginPage = () => {
   return (
     <div className="divMain">
       <h1>{mainLoginText.title}</h1>
-      <p className="pInfoLogin">{mainLoginText.info}</p>
+      <p className="pNotice">{mainLoginText.info}</p>
       <div className="divLoginInputs">
         <label htmlFor="username">{mainLoginText.username}</label>
         <input

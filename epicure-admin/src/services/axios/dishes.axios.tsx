@@ -1,8 +1,4 @@
 import axios from "axios";
-import {
-  CreateDishResource,
-  updateDishResource,
-} from "../../resources/general.axios.resources";
 import { cloudinaryImageCheckType } from "../../data/types/cloudinary.types";
 
 export const getDishesWithNamesAndNotIds = async (
@@ -65,11 +61,11 @@ export const addDish = async (
     );
 
     if (response.status != 200) {
-      return CreateDishResource.onFail;
+      return false;
     }
-    return CreateDishResource.onSuccuss;
+    return true;
   } catch (error) {
-    return CreateDishResource.onFail;
+    return false;
   }
 };
 
@@ -117,10 +113,10 @@ export const changeDish = async (
     );
 
     if (response.status != 200) {
-      return updateDishResource.onFail;
+      return false;
     }
-    return updateDishResource.onSuccuss;
+    return true;
   } catch (error) {
-    return updateDishResource.onFail;
+    return false;
   }
 };

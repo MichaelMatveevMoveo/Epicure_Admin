@@ -47,11 +47,14 @@ export const getCollectionItemsPage = async (
   offset: number,
   limit: number
 ) => {
+  console.log(CollectionName);
+  console.log(offset);
+  console.log(limit);
   return await axios.get(
     `${import.meta.env.VITE_PROTOCOL}://${
       import.meta.env.VITE_BACKEND_URL_FOR_REST
     }/${
       import.meta.env.VITE_API_V
-    }/${CollectionName}/getPartOfItems/:${offset}/:${limit}`
+    }/${CollectionName}/getPartOfItems/${offset}/${limit}`
   );
 };

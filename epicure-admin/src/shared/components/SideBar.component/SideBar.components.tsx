@@ -4,7 +4,7 @@ import { useAppSelector } from "../../hooks/hooks";
 import { RootState } from "../../../redux-toolkit/store/store";
 import LogOutButton from "../LogOutButton.component/LogOutButton.components";
 import "./SideBar.Style.scss";
-import { appRoutes } from "../../constants/route.constants";
+import { appRoutes, withBase } from "../../constants/route.constants";
 
 const SideBar = () => {
   const isLogin = useAppSelector((state: RootState) => state.cookies.isLogin);
@@ -26,7 +26,7 @@ const SideBar = () => {
           <p
             className="LinkText"
             onClick={() => {
-              window.location.href = appRoutes.login;
+              window.location.href = withBase(appRoutes.login);
             }}
           >
             Login

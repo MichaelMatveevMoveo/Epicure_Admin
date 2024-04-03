@@ -1,15 +1,25 @@
 // colors
-$primaryColor: #443b54;
-$SecondaryColor: #322b42;
+$primaryColor: #e0e0e0;
+$SecondaryColor: #d2d1ca;
+
+//screen
+$screenBigSize: 900px;
 
 //font
 $fontSize: 1em;
 $fontSmallSize: 0.8em;
 $fontBigSize: 1.3em;
+$fontVeryBigSize: 3em;
+// @media (max-width: $screenBigSize) {
+//   $fontSize: 0.6em;
+//   $fontSmallSize: 0.4em;
+//   $fontBigSize: 1em;
+//   $fontVeryBigSize: 2em;
+// }
 $fontFamily: Arial, "Helvetica Neue", Helvetica, sans-serif;
 
-$fontLightColor: #cccccc;
-$highLightFontColor: #bdbdfb;
+$fontLightColor: #333333;
+$highLightFontColor: #3498db;
 
 //padding
 $paddingSmall: 0.5em;
@@ -22,7 +32,7 @@ $gapNormal: 1.2em;
 $gapBig: 2em;
 
 //border
-$border: 1px solid #483f55;
+$border: 1px solid #999999;
 $border-radius: 10px;
 // remove all the default css
 
@@ -37,18 +47,31 @@ img {
 }
 
 button {
-  background-color: #5e5879;
+  background-color: #d6d6d6;
   font-family: $fontFamily;
   width: 100px;
   height: 50px;
   font-size: $fontSize;
 }
-.container {
-  box-shadow: 5px 5px #4a4453;
+
+.pNotice {
+  text-decoration: underline;
+  color: #d05f5f;
 }
+// .container {
+//   box-shadow: 5px 5px #b0b0b0;
+// }
 
 .title-shadow {
   text-shadow: 4px 4px $SecondaryColor;
+}
+.LinkText {
+  color: $highLightFontColor;
+}
+.LinkText:hover,
+.LinkText:focus {
+  color: $highLightFontColor;
+  text-decoration: underline;
 }
 .AppMainDiv {
   background-color: $primaryColor;
@@ -65,29 +88,29 @@ button {
   gap: $gapBig;
 
   .AppSideBarDiv {
+    @media (max-width: $screenBigSize) {
+      background-color: $primaryColor;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      z-index: 1;
+      height: 98vh;
+      box-shadow: 5px 5px #b0b0b033;
+    }
     max-width: 150px;
-    border: $border;
-    border-radius: $border-radius;
+    border-right: $border;
     padding: $paddingSmall;
     h1 {
       font-size: $fontBigSize;
     }
   }
-  .LinkText {
-    color: $highLightFontColor;
-  }
-  .LinkText:hover,
-  .LinkText:focus {
-    color: $highLightFontColor;
-    text-decoration: underline;
-  }
   .AppMaincontantBarDiv {
-    max-width: calc(100% - 200px);
+    max-width: 100%;
+    @media (min-width: $screenBigSize) {
+      max-width: calc(100% - 200px);
+    }
     flex-grow: 1;
     flex-shrink: 1;
     padding: $paddingSmall;
-
-    border: $border;
-    border-radius: $border-radius;
   }
 }

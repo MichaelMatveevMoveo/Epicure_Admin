@@ -37,6 +37,28 @@ const collectionSlice = createSlice({
     setCollectionName(state, action) {
       state.collectionName = action.payload;
     },
+    setChefOfWeek(state, action) {
+      const oldChefOfWeek = state.entities.find(
+        (chef) => "isCeffOfWeek" in chef && chef.isCeffOfWeek === true
+      );
+      if (oldChefOfWeek && "isCeffOfWeek" in oldChefOfWeek) {
+        oldChefOfWeek.isCeffOfWeek = false;
+      }
+      const newChefOfWeek = state.entities.find(
+        (chef) => chef._id === action.payload
+      );
+      if (newChefOfWeek && "isCeffOfWeek" in newChefOfWeek) {
+        newChefOfWeek.isCeffOfWeek = true;
+      }
+    },
+    changeEntityStatus(state, action) {
+      const chef1234 = state.entities.find(
+        (chef) => chef._id === action.payload
+      );
+      if (chef1234) {
+        chef1234.isActive = false;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getCollectionSizeThunk.pending, (state) => {
@@ -115,5 +137,6 @@ const collectionSlice = createSlice({
   },
 });
 
-export const { setSize, setCollectionName } = collectionSlice.actions;
+export const { setSize, setCollectionName, setChefOfWeek, changeEntityStatus } =
+  collectionSlice.actions;
 export default collectionSlice.reducer;

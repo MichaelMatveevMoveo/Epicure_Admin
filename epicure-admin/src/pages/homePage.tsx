@@ -1,4 +1,4 @@
-import { appRoutes } from "../shared/constants/route.constants";
+import { appRoutes, withBase } from "../shared/constants/route.constants";
 import "./homePage.style.scss";
 
 export const HomePage = () => {
@@ -9,7 +9,7 @@ export const HomePage = () => {
       <p
         className="LinkText"
         onClick={() => {
-          window.location.href = appRoutes.login;
+          window.location.href = withBase(appRoutes.login);
         }}
       >
         click here to login

@@ -41,7 +41,7 @@ const CollectionTable: React.FC<CollectionTableProps> = ({
   const [columns, setColumns] = useState<GridColDef[]>([]);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
-    pageSize: 1,
+    pageSize: 5,
   });
 
   const fetchDataForTable = useCallback(() => {
@@ -50,7 +50,7 @@ const CollectionTable: React.FC<CollectionTableProps> = ({
         dispatch(
           getCollectionItemsPageThunk({
             collectionName,
-            offset: paginationModel.page,
+            offset: paginationModel.page * paginationModel.pageSize,
             limit: paginationModel.pageSize,
           })
         );
@@ -59,7 +59,7 @@ const CollectionTable: React.FC<CollectionTableProps> = ({
       case "restaurants":
         dispatch(
           getRestaurantsWithNameAndNotIdThunk({
-            offset: paginationModel.page,
+            offset: paginationModel.page * paginationModel.pageSize,
             limit: paginationModel.pageSize,
           })
         );
@@ -68,7 +68,7 @@ const CollectionTable: React.FC<CollectionTableProps> = ({
       case "dishes":
         dispatch(
           getDishesWithNamesAndNotIdsThunk({
-            offset: paginationModel.page,
+            offset: paginationModel.page * paginationModel.pageSize,
             limit: paginationModel.pageSize,
           })
         );
@@ -84,6 +84,7 @@ const CollectionTable: React.FC<CollectionTableProps> = ({
     paginationModel.page,
     paginationModel.pageSize,
   ]);
+  console.log(entities);
 
   // use Effects
   useEffect(() => {
@@ -95,11 +96,13 @@ const CollectionTable: React.FC<CollectionTableProps> = ({
       <DataGrid
         getRowId={(row) => row._id}
         rows={entities}
+        rowHeight={80}
         rowCount={size ? size : 0}
         columns={columns}
+        paginationMode="server"
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
-        pageSizeOptions={[1, 5, 10, 20, 50]}
+        pageSizeOptions={[1, 3, 5, 10, 20, 50]}
         checkboxSelection
         onRowDoubleClick={handleRowClick}
         disableRowSelectionOnClick

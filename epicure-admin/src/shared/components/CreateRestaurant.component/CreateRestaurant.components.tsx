@@ -5,14 +5,10 @@ import {
   DishType,
   RestaurantType,
 } from "../../../data/types/backEndData.types";
-import {
-  deleteItemFromCollection,
-  getAllSize,
-} from "../../../services/axios/general.axios";
+import { getAllSize } from "../../../services/axios/general.axios";
 import { createRestaurantText } from "../../../resources/createRestaurant.resources";
 import { uploadImage } from "../../../services/cloudinary.services";
 import MyRoundImage from "../MyRoundImage.component/MyRoundImage.components";
-import { options } from "../../constants/backEnd.constants";
 import {
   addRestaurant,
   changeRestaurant,
@@ -20,6 +16,13 @@ import {
 import { getDishesForRestaurant } from "../../../services/axios/dishes.axios";
 
 import "./CreateRestaurant.style.scss";
+import {
+  CreateRestaurantResource,
+  updateRestaurantResource,
+} from "../../../resources/general.axios.resources";
+import { options } from "../../constants/backEnd.constants";
+import { getCollectionSizeThunk } from "../../../redux-toolkit/thunks/general.thanks";
+import { useAppDispatch } from "../../hooks/hooks";
 interface CreateRestaurantProps {
   restaurant?: RestaurantType | null;
 }
@@ -47,6 +50,8 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
   const [sendresponse, setSendresponse] = useState<string | null>(null);
   const [fileUpload, setFileUpload] = useState<File | null>(null);
 
+  const dispatch = useAppDispatch();
+
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
@@ -63,9 +68,12 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
       newImageData = await uploadImage(fileUpload);
     }
     if (newImageData) {
-      setSendresponse(
-        await addRestaurant(restName, selectedChefId, stars, newImageData)
-      );
+      if (await addRestaurant(restName, selectedChefId, stars, newImageData)) {
+        dispatch(getCollectionSizeThunk(options.restaurants.key));
+        setSendresponse(CreateRestaurantResource.onSuccuss);
+      } else {
+        setSendresponse(CreateRestaurantResource.onFail);
+      }
     }
   }, [fileUpload, restName, selectedChefId, stars]);
 
@@ -75,38 +83,40 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
       newImageData = await uploadImage(fileUpload);
     }
     if (restaurant) {
+      let isSuccesses = false;
       if (newImageData) {
-        setSendresponse(
-          await changeRestaurant(
-            restaurant?._id,
-            restName,
-            selectedChefId,
-            stars,
-            selectedDishId,
-            newImageData
-          )
+        isSuccesses = await changeRestaurant(
+          restaurant?._id,
+          restName,
+          selectedChefId,
+          stars,
+          selectedDishId,
+          newImageData
         );
       } else {
-        setSendresponse(
-          await changeRestaurant(
-            restaurant?._id,
-            restName,
-            selectedChefId,
-            stars,
-            selectedDishId
-          )
+        isSuccesses = await changeRestaurant(
+          restaurant?._id,
+          restName,
+          selectedChefId,
+          stars,
+          selectedDishId
         );
+      }
+      if (isSuccesses) {
+        setSendresponse(updateRestaurantResource.onSuccuss);
+      } else {
+        setSendresponse(updateRestaurantResource.onFail);
       }
     }
   }, [fileUpload, restaurant, restName, selectedChefId, stars, selectedDishId]);
 
-  const deleteRestaurantHandler = useCallback(async () => {
-    if (restaurant) {
-      setSendresponse(
-        await deleteItemFromCollection(options.restaurants.key, restaurant._id)
-      );
-    }
-  }, [restaurant]);
+  // const deleteRestaurantHandler = useCallback(async () => {
+  //   if (restaurant) {
+  //     setSendresponse(
+  //       await deleteItemFromCollection(options.restaurants.key, restaurant._id)
+  //     );
+  //   }
+  // }, [restaurant]);
 
   const fetchChefs = useCallback(async (collectionName: string) => {
     const response = await getAllSize(collectionName);
@@ -204,12 +214,7 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
         <div>
           <p>{createRestaurantText.inputs.oldImage_Image}</p>
           <div className="CreateUserOldImage">
-            <MyRoundImage
-              url={`https://res.cloudinary.com/${
-                import.meta.env.VITE_CLOUD_NAME
-              }/image/upload/${restaurant.image}.jpg`}
-              alt={"restaurant"}
-            />
+            <MyRoundImage url={restaurant.image} alt={"restaurant"} />
           </div>
         </div>
       )}
@@ -224,7 +229,6 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
       >
         {restaurant ? "update" : "create"}
       </button>
-      {restaurant && <button onClick={deleteRestaurantHandler}>delete</button>}
     </div>
   );
 };

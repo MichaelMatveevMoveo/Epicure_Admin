@@ -4,16 +4,19 @@ import {
   RestaurantType,
 } from "../../../data/types/backEndData.types";
 import { uploadImage } from "../../../services/cloudinary.services";
-import {
-  deleteItemFromCollection,
-  getAllSize,
-} from "../../../services/axios/general.axios";
+import { getAllSize } from "../../../services/axios/general.axios";
 import { createDishText } from "../../../resources/createDish.resources";
 import { addDish, changeDish } from "../../../services/axios/dishes.axios";
-import { options } from "../../constants/backEnd.constants";
 import MyRoundImage from "../MyRoundImage.component/MyRoundImage.components";
 
 import "./CreateDish.style.scss";
+import { useAppDispatch } from "../../hooks/hooks";
+import { getCollectionSizeThunk } from "../../../redux-toolkit/thunks/general.thanks";
+import { options } from "../../constants/backEnd.constants";
+import {
+  CreateDishResource,
+  updateDishResource,
+} from "../../../resources/general.axios.resources";
 interface CreateDishProps {
   dish?: DishType | null;
 }
@@ -38,6 +41,8 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
 
   const [sendresponse, setSendresponse] = useState<string | null>(null);
   const [fileUpload, setFileUpload] = useState<File | null>(null);
+
+  const dispatch = useAppDispatch();
 
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +86,7 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
       newImageData = await uploadImage(fileUpload);
     }
     if (newImageData) {
-      setSendresponse(
+      if (
         await addDish(
           dishName,
           selectedRestaurantId,
@@ -90,9 +95,22 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
           tags,
           newImageData
         )
-      );
+      ) {
+        dispatch(getCollectionSizeThunk(options.dishes.key));
+        setSendresponse(CreateDishResource.onSuccuss);
+      } else {
+        setSendresponse(CreateDishResource.onFail);
+      }
     }
-  }, [fileUpload, dishName, selectedRestaurantId, price, ingredients, tags]);
+  }, [
+    fileUpload,
+    dishName,
+    selectedRestaurantId,
+    price,
+    ingredients,
+    tags,
+    dispatch,
+  ]);
 
   const updateDishHandler = useCallback(async () => {
     let newImageData = null;
@@ -100,31 +118,33 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
       newImageData = await uploadImage(fileUpload);
     }
     if (dish) {
+      let isSuccesses = false;
       if (newImageData) {
-        setSendresponse(
-          await changeDish(
-            dish?._id,
-            dishName,
-            selectedRestaurantId,
-            price,
-            ingredients,
-            tags,
-            undefined,
-            newImageData
-          )
+        isSuccesses = await changeDish(
+          dish?._id,
+          dishName,
+          selectedRestaurantId,
+          price,
+          ingredients,
+          tags,
+          undefined,
+          newImageData
         );
       } else {
-        setSendresponse(
-          await changeDish(
-            dish?._id,
-            dishName,
-            selectedRestaurantId,
-            price,
-            ingredients,
-            tags,
-            dish?.image
-          )
+        isSuccesses = await changeDish(
+          dish?._id,
+          dishName,
+          selectedRestaurantId,
+          price,
+          ingredients,
+          tags,
+          dish?.image
         );
+      }
+      if (isSuccesses) {
+        setSendresponse(updateDishResource.onSuccuss);
+      } else {
+        setSendresponse(updateDishResource.onFail);
       }
     }
   }, [
@@ -137,13 +157,13 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
     tags,
   ]);
 
-  const deleteDishHandler = useCallback(async () => {
-    if (dish) {
-      setSendresponse(
-        await deleteItemFromCollection(options.dishes.key, dish._id)
-      );
-    }
-  }, [dish]);
+  // const deleteDishHandler = useCallback(async () => {
+  //   if (dish) {
+  //     setSendresponse(
+  //       await deleteItemFromCollection(options.dishes.key, dish._id)
+  //     );
+  //   }
+  // }, [dish]);
 
   const fetchRestaurants = useCallback(async (collectionName: string) => {
     const response = await getAllSize(collectionName);
@@ -209,14 +229,12 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
       />
       <ul>
         {ingredients.map((item) => (
-          <li key={item}>
+          <li
+            className="LinkText"
+            onClick={() => removeIngredient(item)}
+            key={item}
+          >
             {item}
-            <button
-              className="DishRemoveButton"
-              onClick={() => removeIngredient(item)}
-            >
-              remove
-            </button>
           </li>
         ))}
       </ul>
@@ -232,14 +250,8 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
       />
       <ul>
         {tags.map((item) => (
-          <li key={item}>
+          <li className="LinkText" onClick={() => removeTag(item)} key={item}>
             {item}
-            <button
-              className="DishRemoveButton"
-              onClick={() => removeTag(item)}
-            >
-              remove
-            </button>
           </li>
         ))}
       </ul>
@@ -249,12 +261,7 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
         <div>
           <p>{createDishText.inputs.oldImage_Image}</p>
           <div className="CreateUserOldImage">
-            <MyRoundImage
-              url={`https://res.cloudinary.com/${
-                import.meta.env.VITE_CLOUD_NAME
-              }/image/upload/${dish.image}.jpg`}
-              alt={"restaurant"}
-            />
+            <MyRoundImage url={dish.image} alt={"restaurant"} />
           </div>
         </div>
       )}
@@ -265,7 +272,6 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
       <button onClick={dish ? updateDishHandler : createDishHandler}>
         {dish ? "update" : "create"}
       </button>
-      {dish && <button onClick={deleteDishHandler}>delete</button>}
     </div>
   );
 };

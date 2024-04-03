@@ -7,10 +7,12 @@
   gap: $gapSmall;
 
   ul {
-    padding: $paddingSmall $paddingBig;
+    padding: $paddingSmall;
     display: flex;
     flex-direction: column;
     gap: $gapSmall; /* Sets gap between items in the ul using SCSS variable */
+    list-style-type: circle;
+    list-style-position: inside;
   }
 
   .sideBarButtonLog {

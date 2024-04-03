@@ -18,6 +18,7 @@ import {
 import { mainPageText } from "../resources/mainPage.resources";
 import CollectionTable from "../shared/components/CollectionTable.component/CollectionTable.components";
 import CollectionModalPopover from "../shared/components/CollectionModalPopover.component/CollectionModalPopover.components";
+import { appRoutes, withBase } from "../shared/constants/route.constants";
 
 export const MainPage = () => {
   const { collectionName } = useParams();
@@ -56,16 +57,16 @@ export const MainPage = () => {
     }
   }, [collectionName, dispatch]);
 
-  useEffect(() => {
-    if (collectionName) {
-      dispatch(getCollectionSizeThunk(collectionName));
-    }
-  }, [collectionName, dispatch]);
+  // useEffect(() => {
+  //   if (collectionName) {
+  //     dispatch(getCollectionSizeThunk(collectionName));
+  //   }
+  // }, [collectionName, dispatch]);
 
   return (
     <div className="MainPageDiv">
       <h1 className=" title-shadow">{collectionName}</h1>
-      {size && <p>{mainPageText.numberOfEntries(size)}</p>}
+      {size && <h3>{mainPageText.numberOfEntries(size)}</h3>}
 
       <CollectionTable
         collectionName={collectionName ? collectionName : ""}
@@ -78,10 +79,10 @@ export const MainPage = () => {
       )}
       {!isLogin && (
         <>
-          <p>{mainPageText.login}</p>
+          <p className="pNotice">{mainPageText.login}</p>
           <button
             onClick={() => {
-              window.location.href = "/login";
+              window.location.href = withBase(appRoutes.login);
             }}
             className="MainPageCreateButton"
           >

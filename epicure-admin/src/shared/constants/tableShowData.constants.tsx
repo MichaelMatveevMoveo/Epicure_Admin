@@ -2,6 +2,8 @@ import { GridColDef } from "@mui/x-data-grid";
 import { options } from "./backEnd.constants";
 import MyRoundImage from "../components/MyRoundImage.component/MyRoundImage.components";
 import DeleteButton from "../components/DeleteButton.component/DeleteButton.components";
+
+import IsChefOFWeekColumn from "../components/IsChefOFWeekColumn.component/IsChefOFWeekColumn";
 export const Chefcolumns: GridColDef[] = [
   { field: "_id", headerName: "ID", width: 250 },
 
@@ -31,18 +33,28 @@ export const Chefcolumns: GridColDef[] = [
     editable: true,
   },
   {
-    field: "isCeffOfWeek§",
+    field: "stam",
     headerName: "Is Chef Week",
-    type: "boolean",
-    maxWidth: 250,
-    editable: true,
-  },
-  {
-    field: "delete",
-    headerName: "delete",
     maxWidth: 250,
     renderCell: (params) => (
-      <DeleteButton collectionName={options.chefs.key} itemId={params.row.id} />
+      <div>
+        {params.row.isCeffOfWeek ? (
+          "yes"
+        ) : (
+          <IsChefOFWeekColumn chefId={params.row.id} />
+        )}
+      </div>
+    ),
+  },
+  {
+    field: "remove",
+    headerName: "remove",
+    maxWidth: 250,
+    renderCell: (params) => (
+      <DeleteButton
+        collectionName={options.chefs.key}
+        itemId={params.row._id}
+      />
     ),
   },
 ];
@@ -93,17 +105,17 @@ export const Restaurantscolumns: GridColDef[] = [
   {
     field: "signatureDishId",
     headerName: "Signature Dish",
-    maxWidth: 250,
+    width: 400,
     editable: true,
   },
   {
-    field: "delete",
-    headerName: "delete",
+    field: "remove",
+    headerName: "remove",
     maxWidth: 250,
     renderCell: (params) => (
       <DeleteButton
         collectionName={options.restaurants.key}
-        itemId={params.row.id}
+        itemId={params.row._id}
       />
     ),
   },
@@ -170,13 +182,13 @@ export const Dishescolumns: GridColDef[] = [
     editable: true,
   },
   {
-    field: "delete",
-    headerName: "delete",
+    field: "remove",
+    headerName: "remove",
     maxWidth: 250,
     renderCell: (params) => (
       <DeleteButton
-        collectionName={options.restaurants.key}
-        itemId={params.row.id}
+        collectionName={options.dishes.key}
+        itemId={params.row._id}
       />
     ),
   },

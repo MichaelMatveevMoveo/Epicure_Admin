@@ -18,9 +18,16 @@
   .CreateUserOldImage {
     width: 30%;
   }
-  .DishRemoveButton {
-    width: 50px;
-    height: 20px;
-    font-size: $fontSmallSize;
+  ul {
+    width: 100%;
+    list-style-type: none;
+    padding: 0;
+    li {
+      display: inline-block;
+    }
+    li:not(:last-child)::after {
+      content: ",";
+      margin-right: 5px;
+    }
   }
 }

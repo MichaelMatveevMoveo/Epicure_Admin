@@ -1,9 +1,5 @@
 import axios from "axios";
 
-import {
-  CreateRestaurantResource,
-  updateRestaurantResource,
-} from "../../resources/general.axios.resources";
 import { cloudinaryImageCheckType } from "../../data/types/cloudinary.types";
 
 export const getRestaurantsWithNameAndNotId = async (
@@ -48,11 +44,11 @@ export const addRestaurant = async (
     );
 
     if (response.status != 200) {
-      return CreateRestaurantResource.onFail;
+      return false;
     }
-    return CreateRestaurantResource.onSuccuss;
+    return true;
   } catch (error) {
-    return CreateRestaurantResource.onFail;
+    return false;
   }
 };
 
@@ -88,10 +84,10 @@ export const changeRestaurant = async (
     );
 
     if (response.status != 200) {
-      return updateRestaurantResource.onFail;
+      return false;
     }
-    return updateRestaurantResource.onSuccuss;
+    return true;
   } catch (error) {
-    return updateRestaurantResource.onFail;
+    return false;
   }
 };

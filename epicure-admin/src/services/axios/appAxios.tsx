@@ -5,13 +5,14 @@ import {
   removeTokenFromCookies,
 } from "../../data/utils/MyLink.util/cookies";
 import { setIsLogin } from "../../redux-toolkit/slices/loginStatus.slice";
+import { appRoutes, withBase } from "../../shared/constants/route.constants";
 
 const handleLoginState = () => {
-  if (window.location.pathname !== "/login") {
+  if (window.location.pathname !== withBase(appRoutes.login)) {
     // Dispatch the action to update login state
     setIsLogin(false); // Example action
     // Optionally, you can redirect the user to the login page here
-    window.location.href = "/login";
+    window.location.href = withBase(appRoutes.login);
   }
 };
 

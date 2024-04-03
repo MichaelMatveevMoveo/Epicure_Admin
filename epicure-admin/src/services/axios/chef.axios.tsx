@@ -1,9 +1,5 @@
 import axios from "axios";
 import { cloudinaryImageCheckType } from "../../data/types/cloudinary.types";
-import {
-  CreateChefResource,
-  updateChefResource,
-} from "../../resources/general.axios.resources";
 
 export const addChef = async (
   name: string,
@@ -32,11 +28,11 @@ export const addChef = async (
     );
 
     if (response.status != 200) {
-      return CreateChefResource.onFail;
+      return false;
     }
-    return CreateChefResource.onSuccuss;
+    return true;
   } catch (error) {
-    return CreateChefResource.onFail;
+    return false;
   }
 };
 
@@ -72,10 +68,35 @@ export const changeChef = async (
     );
 
     if (response.status != 200) {
-      return updateChefResource.onFail;
+      return false;
     }
-    return updateChefResource.onSuccuss;
+    return true;
   } catch (error) {
-    return updateChefResource.onFail;
+    return false;
+  }
+};
+
+export const makeChefOfWeek = async (id: string) => {
+  const formData = new FormData();
+  formData.append("id", id);
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_PROTOCOL}://${
+        import.meta.env.VITE_BACKEND_URL_FOR_REST
+      }/${import.meta.env.VITE_API_V}/admin/chefs/set/ChefOfWeek`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response.status != 200) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    return false;
   }
 };
