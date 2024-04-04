@@ -4,6 +4,8 @@ import MyRoundImage from "../components/MyRoundImage.component/MyRoundImage.comp
 import DeleteButton from "../components/DeleteButton.component/DeleteButton.components";
 
 import IsChefOFWeekColumn from "../components/IsChefOFWeekColumn.component/IsChefOFWeekColumn";
+import IsPopularSwitch from "../components/IsPopularSwitch.component/IsPopularSwitch.components";
+import IsActiveSwitch from "../components/IsActiveSwitch.component/IsActiveSwitch.components";
 export const Chefcolumns: GridColDef[] = [
   { field: "_id", headerName: "ID", width: 250 },
 
@@ -27,10 +29,15 @@ export const Chefcolumns: GridColDef[] = [
   },
   {
     field: "isActive",
-    headerName: "status",
-    type: "boolean",
+    headerName: "Active",
     maxWidth: 250,
-    editable: true,
+    renderCell: (params) => (
+      <IsActiveSwitch
+        collectionName={options.chefs.key}
+        id={params.row._id}
+        isActive={params.row.isActive}
+      />
+    ),
   },
   {
     field: "stam",
@@ -90,17 +97,26 @@ export const Restaurantscolumns: GridColDef[] = [
   },
   {
     field: "isActive",
-    headerName: "status",
-    type: "boolean",
+    headerName: "Active",
     maxWidth: 250,
-    editable: true,
+    renderCell: (params) => (
+      <IsActiveSwitch
+        collectionName={options.restaurants.key}
+        id={params.row._id}
+        isActive={params.row.isActive}
+      />
+    ),
   },
   {
     field: "isPopular",
     headerName: "Is Popular",
-    type: "boolean",
     maxWidth: 250,
-    editable: true,
+    renderCell: (params) => (
+      <IsPopularSwitch
+        restaurantId={params.row._id}
+        isPopular={params.row.isPopular}
+      />
+    ),
   },
   {
     field: "signatureDishId",
@@ -163,10 +179,15 @@ export const Dishescolumns: GridColDef[] = [
   },
   {
     field: "isActive",
-    headerName: "status",
-    type: "boolean",
+    headerName: "Active",
     maxWidth: 250,
-    editable: true,
+    renderCell: (params) => (
+      <IsActiveSwitch
+        collectionName={options.dishes.key}
+        id={params.row._id}
+        isActive={params.row.isActive}
+      />
+    ),
   },
   {
     field: "restaurant",

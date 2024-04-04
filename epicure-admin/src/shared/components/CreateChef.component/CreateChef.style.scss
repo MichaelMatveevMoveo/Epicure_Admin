@@ -1,11 +1,19 @@
 @import "../../../App.scss";
-
+.ChefMainDiv {
+  display: flex;
+  background-color: $primaryColor;
+  .UserOldImage {
+    min-width: 35%;
+    align-content: center;
+  }
+}
 .CreateChefMainDiv {
   display: flex;
   flex-direction: column;
   gap: $gapSmall;
   padding: $paddingNormal;
   background-color: $primaryColor;
+  width: 100%;
   label {
     font-size: $fontBigSize;
   }
@@ -13,9 +21,6 @@
     width: 30%;
   }
   select {
-    width: 30%;
-  }
-  .CreateUserOldImage {
     width: 30%;
   }
 }

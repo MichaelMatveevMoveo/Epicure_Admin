@@ -57,14 +57,16 @@ export const changeRestaurant = async (
   name: string,
   chef: string,
   stars: string,
-  signatureDishId: string,
+  signatureDishId?: string,
   imageprops?: cloudinaryImageCheckType
 ) => {
   const formData = new FormData();
   formData.append("name", name);
   formData.append("stars", stars);
   formData.append("chef", chef);
-  formData.append("signatureDishId", signatureDishId);
+  if (signatureDishId) {
+    formData.append("signatureDishId", signatureDishId);
+  }
   if (imageprops) {
     formData.append("image", imageprops.public_id);
     formData.append("version", imageprops.version);
@@ -83,6 +85,30 @@ export const changeRestaurant = async (
       }
     );
 
+    if (response.status != 200) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const changeIsPopularRestaurant = async (rest_id: string) => {
+  const formData = new FormData();
+  formData.append("id", rest_id);
+  try {
+    const response = await axios.patch(
+      `${import.meta.env.VITE_PROTOCOL}://${
+        import.meta.env.VITE_BACKEND_URL_FOR_REST
+      }/${import.meta.env.VITE_API_V}/admin/restaurants/change/IsPopular`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (response.status != 200) {
       return false;
     }

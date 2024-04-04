@@ -187,104 +187,106 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
   }, [fetchRestaurants]);
 
   return (
-    <div className="CreateDishMainDiv">
-      <h2>{dish ? createDishText.titleUpdate : createDishText.titleCreate}</h2>
-      <label htmlFor="name">{createDishText.inputs.name}</label>
-      <input
-        type="text"
-        name="name"
-        id="name"
-        value={dishName}
-        onChange={(event) => {
-          setDishName(event.currentTarget.value);
-        }}
-      ></input>
-      <label htmlFor="restaurants">{createDishText.inputs.restaurant}</label>
-      {restaurants.length > 0 && (
-        <select
-          name="restaurants"
-          id="restaurants"
-          value={selectedRestaurantId}
+    <div className="ChefMainDiv">
+      <div className="CreateDishMainDiv">
+        <h2>
+          {dish ? createDishText.titleUpdate : createDishText.titleCreate}
+        </h2>
+        <label htmlFor="name">{createDishText.inputs.name}</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          value={dishName}
           onChange={(event) => {
-            setSelectedRestaurantId(event.currentTarget.value);
+            setDishName(event.currentTarget.value);
           }}
-        >
-          <option key={"----"} value={""}>
-            ----
-          </option>
-          {restaurants.map((value) => {
-            return (
-              <option key={value._id} value={value._id}>
-                {value.name}
-              </option>
-            );
-          })}
-        </select>
-      )}
-      <label htmlFor="price">{createDishText.inputs.price}</label>
-      <input
-        type="text"
-        name="price"
-        id="price"
-        value={price}
-        onChange={(event) => {
-          setPrice(event.currentTarget.value);
-        }}
-      />
-      <label htmlFor="ingredient">{createDishText.inputs.ingredient}</label>
-      <input
-        type="text"
-        name="ingredient"
-        id="ingredient"
-        value={currentIngredient}
-        onChange={(event) => setCurrentIngredient(event.currentTarget.value)}
-        placeholder="Enter an item"
-      />
-      <ul>
-        {ingredients.map((item) => (
-          <li
-            className="LinkText"
-            onClick={() => removeIngredient(item)}
-            key={item}
+        ></input>
+        <label htmlFor="restaurants">{createDishText.inputs.restaurant}</label>
+        {restaurants.length > 0 && (
+          <select
+            name="restaurants"
+            id="restaurants"
+            value={selectedRestaurantId}
+            onChange={(event) => {
+              setSelectedRestaurantId(event.currentTarget.value);
+            }}
           >
-            {item}
-          </li>
-        ))}
-      </ul>
-      <button onClick={addIngredient}>Add</button>
-      <label htmlFor="tag">{createDishText.inputs.tag}</label>
-      <input
-        type="text"
-        name="tag"
-        id="tag"
-        value={currentTag}
-        onChange={(event) => setCurrentTag(event.currentTarget.value)}
-        placeholder="Enter an item"
-      />
-      <ul>
-        {tags.map((item) => (
-          <li className="LinkText" onClick={() => removeTag(item)} key={item}>
-            {item}
-          </li>
-        ))}
-      </ul>
-      <button onClick={addTag}>Add</button>
+            <option key={"----"} value={""}>
+              ----
+            </option>
+            {restaurants.map((value) => {
+              return (
+                <option key={value._id} value={value._id}>
+                  {value.name}
+                </option>
+              );
+            })}
+          </select>
+        )}
+        <label htmlFor="price">{createDishText.inputs.price}</label>
+        <input
+          type="text"
+          name="price"
+          id="price"
+          value={price}
+          onChange={(event) => {
+            setPrice(event.currentTarget.value);
+          }}
+        />
+        <label htmlFor="ingredient">{createDishText.inputs.ingredient}</label>
+        <input
+          type="text"
+          name="ingredient"
+          id="ingredient"
+          value={currentIngredient}
+          onChange={(event) => setCurrentIngredient(event.currentTarget.value)}
+          placeholder="Enter an item"
+        />
+        <ul>
+          {ingredients.map((item) => (
+            <li
+              className="LinkText"
+              onClick={() => removeIngredient(item)}
+              key={item}
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+        <button onClick={addIngredient}>Add</button>
+        <label htmlFor="tag">{createDishText.inputs.tag}</label>
+        <input
+          type="text"
+          name="tag"
+          id="tag"
+          value={currentTag}
+          onChange={(event) => setCurrentTag(event.currentTarget.value)}
+          placeholder="Enter an item"
+        />
+        <ul>
+          {tags.map((item) => (
+            <li className="LinkText" onClick={() => removeTag(item)} key={item}>
+              {item}
+            </li>
+          ))}
+        </ul>
+        <button onClick={addTag}>Add</button>
 
+        <label htmlFor="file-field">{createDishText.inputs.choose_Image}</label>
+        <input id="file-field" type="file" onChange={handleFileChange} />
+        {sendresponse && <p>{sendresponse}</p>}
+        <button onClick={dish ? updateDishHandler : createDishHandler}>
+          {dish ? "update" : "create"}
+        </button>
+      </div>
       {dish?.image && (
-        <div>
-          <p>{createDishText.inputs.oldImage_Image}</p>
-          <div className="CreateUserOldImage">
-            <MyRoundImage url={dish.image} alt={"restaurant"} />
+        <div className="UserOldImage">
+          <div>
+            <MyRoundImage url={dish.image} alt={"dish"} />
           </div>
         </div>
       )}
-
-      <label htmlFor="file-field">{createDishText.inputs.choose_Image}</label>
-      <input id="file-field" type="file" onChange={handleFileChange} />
-      {sendresponse && <p>{sendresponse}</p>}
-      <button onClick={dish ? updateDishHandler : createDishHandler}>
-        {dish ? "update" : "create"}
-      </button>
     </div>
   );
 };

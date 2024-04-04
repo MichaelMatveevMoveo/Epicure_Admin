@@ -159,103 +159,105 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
     }
   }, [fetchChefs, fetchDishes, restaurant]);
   return (
-    <div className="CreateRestaurantMainDiv">
-      <h2>
-        {restaurant
-          ? createRestaurantText.titleUpdate
-          : createRestaurantText.titleCreate}
-      </h2>
-      <label htmlFor="name">{createRestaurantText.inputs.name}</label>
-      <input
-        type="text"
-        name="name"
-        id="name"
-        value={restName}
-        onChange={(event) => {
-          setRestName(event.currentTarget.value);
-        }}
-      ></input>
-
-      <label htmlFor="chefs">{createRestaurantText.inputs.chef}</label>
-      {chefs.length > 0 && (
-        <select
-          name="chefs"
-          id="chefs"
-          value={selectedChefId}
+    <div className="RestMainDiv">
+      <div className="CreateRestaurantMainDiv">
+        <h2>
+          {restaurant
+            ? createRestaurantText.titleUpdate
+            : createRestaurantText.titleCreate}
+        </h2>
+        <label htmlFor="name">{createRestaurantText.inputs.name}</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          value={restName}
           onChange={(event) => {
-            setSelectedChefId(event.currentTarget.value);
+            setRestName(event.currentTarget.value);
+          }}
+        ></input>
+
+        <label htmlFor="chefs">{createRestaurantText.inputs.chef}</label>
+        {chefs.length > 0 && (
+          <select
+            name="chefs"
+            id="chefs"
+            value={selectedChefId}
+            onChange={(event) => {
+              setSelectedChefId(event.currentTarget.value);
+            }}
+          >
+            {chefs.map((value) => {
+              return (
+                <option key={value._id} value={value._id}>
+                  {value.name}
+                </option>
+              );
+            })}
+          </select>
+        )}
+
+        <label htmlFor="stars">{createRestaurantText.inputs.stars}</label>
+        <select
+          name="stars"
+          id="stars"
+          value={stars}
+          onChange={(event) => {
+            setStars(event.currentTarget.value);
           }}
         >
-          {chefs.map((value) => {
-            return (
-              <option key={value._id} value={value._id}>
-                {value.name}
-              </option>
-            );
-          })}
+          {[0, 1, 2, 3, 4, 5].map((value) => (
+            <option key={value} value={value}>
+              {value}
+            </option>
+          ))}
         </select>
-      )}
 
-      <label htmlFor="stars">{createRestaurantText.inputs.stars}</label>
-      <select
-        name="stars"
-        id="stars"
-        value={stars}
-        onChange={(event) => {
-          setStars(event.currentTarget.value);
-        }}
-      >
-        {[0, 1, 2, 3, 4, 5].map((value) => (
-          <option key={value} value={value}>
-            {value}
-          </option>
-        ))}
-      </select>
+        <label htmlFor="signatureDishId">
+          {createRestaurantText.inputs.signatureDishId}
+        </label>
+        {chefs.length > 0 && (
+          <select
+            name="signatureDishId"
+            id="signatureDishId"
+            value={selectedDishId}
+            onChange={(event) => {
+              setSelectedDishId(event.currentTarget.value);
+            }}
+          >
+            <option key={undefined} value={undefined}>
+              ----
+            </option>
+            {dishes.map((value) => {
+              return (
+                <option key={value._id} value={value._id}>
+                  {value.name}
+                </option>
+              );
+            })}
+          </select>
+        )}
 
-      <label htmlFor="signatureDishId">
-        {createRestaurantText.inputs.signatureDishId}
-      </label>
-      {chefs.length > 0 && (
-        <select
-          name="signatureDishId"
-          id="signatureDishId"
-          value={selectedDishId}
-          onChange={(event) => {
-            setSelectedDishId(event.currentTarget.value);
-          }}
+        <label htmlFor="file-field">
+          {createRestaurantText.inputs.choose_Image}
+        </label>
+        <input id="file-field" type="file" onChange={handleFileChange} />
+        {sendresponse && <p>{sendresponse}</p>}
+        <button
+          onClick={
+            restaurant ? updateRestaurantHandler : createRestaurantHandler
+          }
         >
-          <option key={undefined} value={undefined}>
-            ----
-          </option>
-          {dishes.map((value) => {
-            return (
-              <option key={value._id} value={value._id}>
-                {value.name}
-              </option>
-            );
-          })}
-        </select>
-      )}
-
+          {restaurant ? "update" : "create"}
+        </button>
+      </div>
       {restaurant?.image && (
-        <div>
-          <p>{createRestaurantText.inputs.oldImage_Image}</p>
-          <div className="CreateUserOldImage">
+        <div className="UserOldImage">
+          <div>
             <MyRoundImage url={restaurant.image} alt={"restaurant"} />
           </div>
         </div>
       )}
-
-      <label htmlFor="file-field">
-        {createRestaurantText.inputs.choose_Image}
-      </label>
-      <input id="file-field" type="file" onChange={handleFileChange} />
-      {sendresponse && <p>{sendresponse}</p>}
-      <button
-        onClick={restaurant ? updateRestaurantHandler : createRestaurantHandler}
-      >
-        {restaurant ? "update" : "create"}
-      </button>
     </div>
   );
 };

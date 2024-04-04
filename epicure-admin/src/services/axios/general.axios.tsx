@@ -34,7 +34,9 @@ export const deleteItemFromCollection = async (
     axios.delete(
       `${import.meta.env.VITE_PROTOCOL}://${
         import.meta.env.VITE_BACKEND_URL_FOR_REST
-      }/${import.meta.env.VITE_API_V}/admin/${CollectionName}/${item_id}`
+      }/${
+        import.meta.env.VITE_API_V
+      }/admin/${CollectionName}/deleteForEver/${item_id}`
     );
     return deleteChefResource.onSuccuss;
   } catch (error) {
@@ -47,9 +49,6 @@ export const getCollectionItemsPage = async (
   offset: number,
   limit: number
 ) => {
-  console.log(CollectionName);
-  console.log(offset);
-  console.log(limit);
   return await axios.get(
     `${import.meta.env.VITE_PROTOCOL}://${
       import.meta.env.VITE_BACKEND_URL_FOR_REST
@@ -57,4 +56,32 @@ export const getCollectionItemsPage = async (
       import.meta.env.VITE_API_V
     }/${CollectionName}/getPartOfItems/${offset}/${limit}`
   );
+};
+
+export const changeIsActiveRestaurant = async (
+  collectionName: string,
+  id: string
+) => {
+  const formData = new FormData();
+  try {
+    const response = await axios.patch(
+      `${import.meta.env.VITE_PROTOCOL}://${
+        import.meta.env.VITE_BACKEND_URL_FOR_REST
+      }/${
+        import.meta.env.VITE_API_V
+      }/admin/${collectionName}/change/IsActive/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.status != 200) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    return false;
+  }
 };

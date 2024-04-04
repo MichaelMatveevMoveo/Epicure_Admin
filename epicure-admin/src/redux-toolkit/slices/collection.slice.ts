@@ -59,6 +59,15 @@ const collectionSlice = createSlice({
         chef1234.isActive = false;
       }
     },
+
+    removeEntity(state, action) {
+      const indexToRemove = state.entities.findIndex(
+        (entity) => entity._id === action.payload
+      );
+      if (indexToRemove !== -1) {
+        state.entities.splice(indexToRemove, 1);
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getCollectionSizeThunk.pending, (state) => {
@@ -137,6 +146,11 @@ const collectionSlice = createSlice({
   },
 });
 
-export const { setSize, setCollectionName, setChefOfWeek, changeEntityStatus } =
-  collectionSlice.actions;
+export const {
+  setSize,
+  setCollectionName,
+  setChefOfWeek,
+  changeEntityStatus,
+  removeEntity,
+} = collectionSlice.actions;
 export default collectionSlice.reducer;

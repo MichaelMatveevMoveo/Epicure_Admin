@@ -94,43 +94,46 @@ const CreateChef: React.FC<CreateChefProps> = ({ chef = null }) => {
   // }, [chef]);
 
   return (
-    <div className="CreateChefMainDiv">
-      <h2>{chef ? createChefText.titleUpdate : createChefText.titleCreate}</h2>
-      <label htmlFor="name">{createChefText.inputs.name}</label>
-      <input
-        type="text"
-        name="name"
-        id="name"
-        value={chefName}
-        onChange={(event) => {
-          setChefName(event.currentTarget.value);
-        }}
-      ></input>
-      <label htmlFor="description">{createChefText.inputs.description}</label>
-      <textarea
-        id="description"
-        name="description"
-        rows={4}
-        cols={50}
-        value={chefDescription}
-        onChange={(event) => {
-          setChefDescription(event.currentTarget.value);
-        }}
-      ></textarea>
+    <div className="ChefMainDiv">
+      <div className="CreateChefMainDiv">
+        <h2>
+          {chef ? createChefText.titleUpdate : createChefText.titleCreate}
+        </h2>
+        <label htmlFor="name">{createChefText.inputs.name}</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          value={chefName}
+          onChange={(event) => {
+            setChefName(event.currentTarget.value);
+          }}
+        ></input>
+        <label htmlFor="description">{createChefText.inputs.description}</label>
+        <textarea
+          id="description"
+          name="description"
+          rows={4}
+          cols={50}
+          value={chefDescription}
+          onChange={(event) => {
+            setChefDescription(event.currentTarget.value);
+          }}
+        ></textarea>
+        <label htmlFor="file-field">{createChefText.inputs.choose_Image}</label>
+        <input id="file-field" type="file" onChange={handleFileChange} />
+        {sendresponse && <p>{sendresponse}</p>}
+        <button onClick={chef ? updateChefHandler : createChefHandler}>
+          {chef ? "update" : "create"}
+        </button>
+      </div>
       {chef?.image && (
-        <div>
-          <p>{createChefText.inputs.oldImage_Image}</p>
-          <div className="CreateUserOldImage">
+        <div className="UserOldImage">
+          <div>
             <MyRoundImage url={chef.image} alt={"dish"} />
           </div>
         </div>
       )}
-      <label htmlFor="file-field">{createChefText.inputs.choose_Image}</label>
-      <input id="file-field" type="file" onChange={handleFileChange} />
-      {sendresponse && <p>{sendresponse}</p>}
-      <button onClick={chef ? updateChefHandler : createChefHandler}>
-        {chef ? "update" : "create"}
-      </button>
     </div>
   );
 };

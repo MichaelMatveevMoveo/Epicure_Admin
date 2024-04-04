@@ -1,21 +1,30 @@
 @import "../../../App.scss";
 
+.RestMainDiv {
+  display: flex;
+  background-color: $primaryColor;
+  .UserOldImage {
+    min-width: 35%;
+    align-content: center;
+  }
+}
 .CreateRestaurantMainDiv {
   display: flex;
   flex-direction: column;
   gap: $gapSmall;
   padding: $paddingNormal;
   background-color: $primaryColor;
+  width: 100%;
   label {
     font-size: $fontBigSize;
   }
   input {
-    width: 30%;
+    width: 50%;
   }
   select {
-    width: 30%;
+    width: 50%;
   }
   .CreateUserOldImage {
-    width: 30%;
+    width: 50%;
   }
 }
