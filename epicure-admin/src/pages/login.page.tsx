@@ -59,7 +59,9 @@ export const LoginPage = () => {
           {mainLoginText.alertBadUserNameAndPassword}
         </p>
       )}
-      <button onClick={handelClickLogIn}>{mainLoginText.loginButton}</button>
+      <button className="myButton" onClick={handelClickLogIn}>
+        {mainLoginText.loginButton}
+      </button>
     </div>
   );
 };

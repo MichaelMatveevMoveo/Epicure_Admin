@@ -1,7 +1,5 @@
 import axios from "axios";
 
-import { deleteChefResource } from "../../resources/general.axios.resources";
-
 export const getCollectionSize = async (CollectionName: string) => {
   return await axios.get(
     `${import.meta.env.VITE_PROTOCOL}://${
@@ -38,9 +36,9 @@ export const deleteItemFromCollection = async (
         import.meta.env.VITE_API_V
       }/admin/${CollectionName}/deleteForEver/${item_id}`
     );
-    return deleteChefResource.onSuccuss;
+    return true;
   } catch (error) {
-    return deleteChefResource.onFail;
+    return false;
   }
 };
 

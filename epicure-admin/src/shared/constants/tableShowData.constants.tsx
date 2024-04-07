@@ -6,31 +6,28 @@ import DeleteButton from "../components/DeleteButton.component/DeleteButton.comp
 import IsChefOFWeekColumn from "../components/IsChefOFWeekColumn.component/IsChefOFWeekColumn";
 import IsPopularSwitch from "../components/IsPopularSwitch.component/IsPopularSwitch.components";
 import IsActiveSwitch from "../components/IsActiveSwitch.component/IsActiveSwitch.components";
+
 export const Chefcolumns: GridColDef[] = [
-  { field: "_id", headerName: "ID", width: 250 },
+  { field: "_id", headerName: "ID" },
 
   {
     field: "name",
     headerName: "Name",
-    maxWidth: 250,
-    editable: true,
+    width: 150,
   },
   {
     field: "image",
     headerName: "Image",
-    maxWidth: 250,
     renderCell: (params) => <MyRoundImage url={params.value} alt={"chef"} />,
   },
   {
     field: "description",
     headerName: "Description",
-    maxWidth: 250,
-    editable: true,
+    width: 300,
   },
   {
     field: "isActive",
     headerName: "Active",
-    maxWidth: 250,
     renderCell: (params) => (
       <IsActiveSwitch
         collectionName={options.chefs.key}
@@ -40,9 +37,8 @@ export const Chefcolumns: GridColDef[] = [
     ),
   },
   {
-    field: "stam",
+    field: "isChefWeek",
     headerName: "Is Chef Week",
-    maxWidth: 250,
     renderCell: (params) => (
       <div>
         {params.row.isCeffOfWeek ? (
@@ -56,7 +52,6 @@ export const Chefcolumns: GridColDef[] = [
   {
     field: "remove",
     headerName: "remove",
-    maxWidth: 250,
     renderCell: (params) => (
       <DeleteButton
         collectionName={options.chefs.key}
@@ -67,17 +62,15 @@ export const Chefcolumns: GridColDef[] = [
 ];
 
 export const Restaurantscolumns: GridColDef[] = [
-  { field: "_id", headerName: "ID", width: 90 },
+  { field: "_id", headerName: "ID" },
   {
     field: "name",
     headerName: "Name",
-    maxWidth: 250,
-    editable: true,
+    width: 150,
   },
   {
     field: "image",
     headerName: "Image",
-    maxWidth: 250,
     renderCell: (params) => (
       <MyRoundImage url={params.value} alt={"restaurants"} />
     ),
@@ -85,20 +78,16 @@ export const Restaurantscolumns: GridColDef[] = [
   {
     field: "chef",
     headerName: "Chef",
-    maxWidth: 250,
-    editable: true,
+    width: 150,
   },
   {
     field: "stars",
     headerName: "Stars",
     type: "number",
-    maxWidth: 250,
-    editable: true,
   },
   {
     field: "isActive",
     headerName: "Active",
-    maxWidth: 250,
     renderCell: (params) => (
       <IsActiveSwitch
         collectionName={options.restaurants.key}
@@ -110,7 +99,6 @@ export const Restaurantscolumns: GridColDef[] = [
   {
     field: "isPopular",
     headerName: "Is Popular",
-    maxWidth: 250,
     renderCell: (params) => (
       <IsPopularSwitch
         restaurantId={params.row._id}
@@ -121,13 +109,12 @@ export const Restaurantscolumns: GridColDef[] = [
   {
     field: "signatureDishId",
     headerName: "Signature Dish",
-    width: 400,
+    width: 150,
     editable: true,
   },
   {
     field: "remove",
     headerName: "remove",
-    maxWidth: 250,
     renderCell: (params) => (
       <DeleteButton
         collectionName={options.restaurants.key}
@@ -138,24 +125,21 @@ export const Restaurantscolumns: GridColDef[] = [
 ];
 
 export const Dishescolumns: GridColDef[] = [
-  { field: "_id", headerName: "ID", width: 90 },
+  { field: "_id", headerName: "ID" },
   {
     field: "name",
     headerName: "Name",
-    maxWidth: 250,
-    editable: true,
+    width: 150,
   },
   {
     field: "image",
     headerName: "Image",
-    maxWidth: 250,
     renderCell: (params) => <MyRoundImage url={params.value} alt={"dish"} />,
   },
   {
     field: "Ingredients",
+    width: 200,
     headerName: "Ingredients",
-    maxWidth: 250,
-    editable: true,
     valueGetter: (params) => {
       const ingredients = params.row.Ingredients;
       if (ingredients && Array.isArray(ingredients)) {
@@ -167,8 +151,6 @@ export const Dishescolumns: GridColDef[] = [
   {
     field: "tags",
     headerName: "Tags",
-    maxWidth: 250,
-    editable: true,
     valueGetter: (params) => {
       const tags = params.row.tags;
       if (tags && Array.isArray(tags)) {
@@ -180,7 +162,6 @@ export const Dishescolumns: GridColDef[] = [
   {
     field: "isActive",
     headerName: "Active",
-    maxWidth: 250,
     renderCell: (params) => (
       <IsActiveSwitch
         collectionName={options.dishes.key}
@@ -192,20 +173,16 @@ export const Dishescolumns: GridColDef[] = [
   {
     field: "restaurant",
     headerName: "restaurant",
-    maxWidth: 250,
-    editable: true,
+    width: 150,
   },
   {
     field: "price",
     headerName: "Price",
     type: "number",
-    maxWidth: 250,
-    editable: true,
   },
   {
     field: "remove",
     headerName: "remove",
-    maxWidth: 250,
     renderCell: (params) => (
       <DeleteButton
         collectionName={options.dishes.key}

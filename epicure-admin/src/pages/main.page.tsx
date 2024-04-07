@@ -73,7 +73,10 @@ export const MainPage = () => {
         handleRowClick={handleRowClick}
       />
       {isLogin && (
-        <button onClick={handleButtonClick} className="MainPageCreateButton">
+        <button
+          onClick={handleButtonClick}
+          className="MainPageCreateButton myButton "
+        >
           {mainPageText.createButton(collectionName || "")}
         </button>
       )}
@@ -84,7 +87,7 @@ export const MainPage = () => {
             onClick={() => {
               window.location.href = withBase(appRoutes.login);
             }}
-            className="MainPageCreateButton"
+            className="MainPageCreateButton myButton"
           >
             {mainPageText.loginButton}
           </button>

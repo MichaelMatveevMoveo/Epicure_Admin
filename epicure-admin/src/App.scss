@@ -46,11 +46,19 @@ img {
   display: block;
 }
 
-button {
+.myButton {
   background-color: #d6d6d6;
   font-family: $fontFamily;
   width: 100px;
   height: 50px;
+  font-size: $fontSize;
+}
+
+.myButtonSmall {
+  background-color: #d6d6d6;
+  font-family: $fontFamily;
+  width: 50px;
+  height: 25px;
   font-size: $fontSize;
 }
 

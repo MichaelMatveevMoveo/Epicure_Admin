@@ -84,8 +84,6 @@ const CollectionTable: React.FC<CollectionTableProps> = ({
     paginationModel.page,
     paginationModel.pageSize,
   ]);
-  console.log(entities);
-
   // use Effects
   useEffect(() => {
     fetchDataForTable();

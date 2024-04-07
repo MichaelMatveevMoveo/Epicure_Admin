@@ -16,9 +16,10 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const deleteItemHandler = useCallback(async () => {
-    await deleteItemFromCollection(collectionName, itemId);
-    dispatch(removeEntity(itemId));
-    dispatch(getCollectionSizeThunk(collectionName));
+    if (await deleteItemFromCollection(collectionName, itemId)) {
+      dispatch(removeEntity(itemId));
+      dispatch(getCollectionSizeThunk(collectionName));
+    }
   }, [collectionName, dispatch, itemId]);
 
   return (

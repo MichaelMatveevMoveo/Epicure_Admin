@@ -123,7 +123,10 @@ const CreateChef: React.FC<CreateChefProps> = ({ chef = null }) => {
         <label htmlFor="file-field">{createChefText.inputs.choose_Image}</label>
         <input id="file-field" type="file" onChange={handleFileChange} />
         {sendresponse && <p>{sendresponse}</p>}
-        <button onClick={chef ? updateChefHandler : createChefHandler}>
+        <button
+          className="myButton"
+          onClick={chef ? updateChefHandler : createChefHandler}
+        >
           {chef ? "update" : "create"}
         </button>
       </div>

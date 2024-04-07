@@ -254,7 +254,9 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
             </li>
           ))}
         </ul>
-        <button onClick={addIngredient}>Add</button>
+        <button className="myButtonSmall" onClick={addIngredient}>
+          Add
+        </button>
         <label htmlFor="tag">{createDishText.inputs.tag}</label>
         <input
           type="text"
@@ -271,12 +273,17 @@ const CreateDish: React.FC<CreateDishProps> = ({ dish = null }) => {
             </li>
           ))}
         </ul>
-        <button onClick={addTag}>Add</button>
+        <button className="myButtonSmall" onClick={addTag}>
+          Add
+        </button>
 
         <label htmlFor="file-field">{createDishText.inputs.choose_Image}</label>
         <input id="file-field" type="file" onChange={handleFileChange} />
         {sendresponse && <p>{sendresponse}</p>}
-        <button onClick={dish ? updateDishHandler : createDishHandler}>
+        <button
+          className="myButton"
+          onClick={dish ? updateDishHandler : createDishHandler}
+        >
           {dish ? "update" : "create"}
         </button>
       </div>

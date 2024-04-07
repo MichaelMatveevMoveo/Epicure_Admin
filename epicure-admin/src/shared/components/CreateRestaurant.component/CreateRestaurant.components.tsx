@@ -244,6 +244,7 @@ const CreateRestaurant: React.FC<CreateRestaurantProps> = ({
         <input id="file-field" type="file" onChange={handleFileChange} />
         {sendresponse && <p>{sendresponse}</p>}
         <button
+          className="myButton"
           onClick={
             restaurant ? updateRestaurantHandler : createRestaurantHandler
           }
