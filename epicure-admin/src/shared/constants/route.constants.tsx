@@ -1,6 +1,7 @@
 export const appRoutes = {
   homePage: "/",
   login: "/login",
+  signUp: "/signUp",
   databases: "/database",
 };
 

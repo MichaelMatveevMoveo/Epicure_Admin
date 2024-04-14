@@ -8,6 +8,7 @@ import { HomePage } from "./pages/homePage";
 import { appRoutes } from "./shared/constants/route.constants";
 import { useEffect, useState } from "react";
 import { screenConst } from "./shared/constants/screen.constants";
+import { SignUpPage } from "./pages/signUpPage";
 
 function App() {
   const [isBigScreen, setIsBigScreen] = useState(false);
@@ -69,6 +70,7 @@ function App() {
         <Routes>
           <Route path={appRoutes.homePage} element={<HomePage />}></Route>
           <Route path={appRoutes.login} element={<LoginPage />}></Route>
+          <Route path={appRoutes.signUp} element={<SignUpPage />}></Route>
           <Route
             path={`${appRoutes.databases}/:collectionName`}
             element={<MainPage />}

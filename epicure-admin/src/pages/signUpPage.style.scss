@@ -1,0 +1,16 @@
+@import "../App.scss";
+
+.divMainSignUp {
+  display: flex;
+  flex-direction: column;
+  gap: $gapNormal;
+  .divFormSignUp {
+    display: flex;
+    flex-direction: column;
+    gap: $gapSmall;
+    input {
+      width: 50%;
+      max-width: 300px;
+    }
+  }
+}
